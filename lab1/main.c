@@ -32,7 +32,7 @@ void intFuncMap(int *element) {
 
 void reduce(void *(*func)(void *first, void *second), Array *array, void *start_element) {
     void *res = func(array->first_element, start_element);
-    for (int i = 1; i < array->size - 1; i++) res = func(&array->first_element[i], res);
+    for (int i = 1; i < array->size; i++) res = func(&array->first_element[i], res);
 }
 
 int intFuncReduce(const int *first, const int *second) {
