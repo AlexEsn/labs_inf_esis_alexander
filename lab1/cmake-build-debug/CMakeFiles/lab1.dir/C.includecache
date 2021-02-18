@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/alexesn/CLionProjects/lab1/integer.h
+
+/home/alexesn/CLionProjects/lab1/main.c
+stdio.h
+-
+stdfix.h
+-
+stdlib.h
+-
+stdbool.h
+-
+string.h
+-
+integer.h
+/home/alexesn/CLionProjects/lab1/integer.h
+

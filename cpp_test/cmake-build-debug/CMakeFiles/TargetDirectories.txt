@@ -1,0 +1,3 @@
+/home/alexesn/CLionProjects/cpp_test/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/alexesn/CLionProjects/cpp_test/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/alexesn/CLionProjects/cpp_test/cmake-build-debug/CMakeFiles/main.dir
