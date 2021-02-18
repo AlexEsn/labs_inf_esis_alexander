@@ -11,6 +11,14 @@ typedef struct Array {
     unsigned int size_type;
 } Array;
 
+void sort(Array *array, int (*comp)(const void *left, const void *right)) {
+    qsort(array->first_element, array->size, array->size_type, comp);
+}
+
+int intCompare(const int *left, const int *right) {
+    return *left - *right;
+}
+
 Array map(void (*func)(void *element), Array *array) {
     Array result = {calloc(array->size_type, array->size), array->size, array->size_type};
     memcpy(result.first_element, array->first_element, array->size * array->size_type);
@@ -18,37 +26,38 @@ Array map(void (*func)(void *element), Array *array) {
     return result;
 }
 
-void funcMap(int *element) {
+void intFuncMap(int *element) {
     *((int *) element) = *((int *) element) + 2;
 }
 
-//void reduce(void (*func)(void *first, void *second), Array *array, void *start_element) {
-//    func(array->first_element, start_element);
-//    for (int i = 1; i < array->size - 1; i++) func(&array->first_element[i], );
-//}
+void reduce(void *(*func)(void *first, void *second), Array *array, void *start_element) {
+    void *res = func(array->first_element, start_element);
+    for (int i = 1; i < array->size - 1; i++) res = func(&array->first_element[i], res);
+}
 
-void funcReduce(int *first, int *second) {
-    *second = *first * 2 + *second * 3;
+int intFuncReduce(const int *first, const int *second) {
+    int result = *first * 2 + *second * 3;
+    return result;
 }
 
 Array where(bool (*func)(void *element), Array *array) {
     Array result = {calloc(array->size_type, array->size), array->size, array->size_type};
-    memcpy(result.first_element, array->first_element, array->size * array->size_type);
-    for (int i = 0, j = 0; i < array->size; i++)
+    for (int i = 0, j = 0; i < array->size; i++) {
         if (func(array->first_element + i * array->size_type)) {
-            (result.first_element + j * array->size_type) = (array->first_element + i * array->size_type);
+//            (result.first_element + j * array->size_type) = (array->first_element + i * array->size_type);
             j++;
         }
+    }
     return result;
 }
+
+
 
 int main(int argc, char **argv) {
     int arr[] = {1, 2, 3};
     Array integer = {arr, sizeof(arr) / sizeof(arr[0]), sizeof(arr[0])};
-    Array integer2 = map(funcMap, &integer);
-//    sort(&integer, sizeof(int), (int (*)(const void *, const void *)) intCompare);
+    Array integer2 = map(intFuncMap, &integer);
     for (int i = 0; i < integer2.size; i++) printf("%d ", *((int *) integer2.first_element + i));
-//    printf("%d", reduce(intFunc, &integer, (int*) 4));
 
     return 0;
 }
