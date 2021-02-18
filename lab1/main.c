@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdfix.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
@@ -36,9 +35,9 @@ void* reduce(void *(*func)(void *first, void *second), Array *array, void *start
     return res;
 }
 
-int intFuncReduce(const int *first, const int *second) {
+int* intFuncReduce(const int *first, const int *second) {
     int result = *first * 2 + *second * 3;
-    return result;
+    return &result;
 }
 
 Array where(bool (*func)(void *element), Array *array) {
@@ -57,8 +56,8 @@ Array where(bool (*func)(void *element), Array *array) {
 int main(int argc, char **argv) {
     int arr[] = {1, 2, 3};
     Array integer = {arr, sizeof(arr) / sizeof(arr[0]), sizeof(arr[0])};
-    Array integer2 = map(intFuncMap, &integer);
-    for (int i = 0; i < integer2.size; i++) printf("%d ", *((int *) integer2.first_element + i));
+    reduce(intFuncReduce, &integer, 4);
+    for (int i = 0; i < integer.size; i++) printf("%d ", *((int *) integer.first_element + i));
 
     return 0;
 }

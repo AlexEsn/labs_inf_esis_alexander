@@ -11,8 +11,6 @@
 /home/alexesn/CLionProjects/lab1/main.c
 stdio.h
 -
-stdfix.h
--
 stdlib.h
 -
 stdbool.h
