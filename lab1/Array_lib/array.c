@@ -20,7 +20,7 @@ void sort (Array *array)
           array->dimension,
           array->elementSize,
           array->compare);
-}                   //нужно ли писать сортировку самому?
+}
 
 Array map (void (*func) (void *element), const Array *array)
 {

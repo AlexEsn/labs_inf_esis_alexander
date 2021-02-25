@@ -7,7 +7,7 @@ const int MENU1_SIZE = sizeof(MENU1) / sizeof(MENU1[0]);
 const char *MENU2[] = {"0. Back", "1. Sort", "2. Map", "3. Reduce", "4. Where", "5. Concatenation"};
 const int MENU2_SIZE = sizeof(MENU2) / sizeof(MENU2[0]);
 
-//функция задержки для меню
+// функция задержки для меню
 void delay (int milli_seconds)
 {
     int nano_seconds = 1000 * milli_seconds;
@@ -38,20 +38,21 @@ int dialog (const char *msgs[], int n)
 }
 
 // примеры функции для работы с map, reduce, where
+// позже добавлю ещё вариантов
 void intFuncMap (int *element)
 {
     *((int *) element) = *((int *) element) + 2;
-}                              //просто к каждому элементу прибавляем 2
+}                              // просто к каждому элементу прибавляем 2
 int *intFuncReduce (const int *first, const int *second)
 {
     int *result = malloc(sizeof(int));
     *result = (*((int *) first)) * 2 + (*((int *) second)) * 3;
     return result;
-}    //x1*2+x2*3
+}    // x1*2+x2*3
 bool intFuncWhere (const int *element)
 {
     return !(*element % 2);
-}                      //берём четные
+}                      // берём четные
 
 
 
@@ -59,7 +60,7 @@ int main (int argc, char **argv)
 {
     CEXCEPTION_T EXCEPTION;
 
-    int menu1; // выбранный пункт меню
+    int menu1;
     do {
         menu1 = dialog(MENU1, MENU1_SIZE);
         switch (menu1) {

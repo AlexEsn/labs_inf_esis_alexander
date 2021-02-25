@@ -31,7 +31,6 @@ int     compareIntElements  (const int *left,const int *right);
 
 //функции вывода
 void    printIntArray       (const Array *array);
-//правильно ли я понял, что эти 3 функции нужно написать для каждого типа?
 
 
 
