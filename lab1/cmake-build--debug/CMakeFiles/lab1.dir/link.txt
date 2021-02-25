@@ -1,1 +1,0 @@
-/usr/bin/cc   -rdynamic CMakeFiles/lab1.dir/main.c.o CMakeFiles/lab1.dir/Array_lib/array.c.o CMakeFiles/lab1.dir/CException_lib/CException.c.o  -o lab1 
