@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.0)
 
 project(lab1 VERSION 1.0.0 LANGUAGES C)
 
