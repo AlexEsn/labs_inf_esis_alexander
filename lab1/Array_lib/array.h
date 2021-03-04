@@ -6,8 +6,11 @@
 
 #include <stdbool.h>
 #include <string.h>
+#include <complex.h>                          // либа для работы с комплексными числами
+#include <math.h>
 
-#include "../CException_lib/CException.h"     //lib для обработки исключений методом Try Catch
+#include "../CException_lib/CException.h"     // lib для обработки исключений методом Try Catch
+#include "../examples.h"                      // примеры функций map, where, reduce для всех типов
 
 typedef struct Array
 {
@@ -22,17 +25,21 @@ typedef struct Array
 
 //конструкторы
 Array   constructIntArray();
+Array   constructRealArray();
+Array   constructComplexArray();
 
-//деструкторы
-void   destructIntArray     (Array* array);
+//деструктор
+void   destructArray             (Array* array);
 
 // функции сравнения
-int     compareIntElements  (const int *left,const int *right);
+int     compareIntElements       (const int *left, const int *right);
+int     compareRealElements      (const double *left, const double *right);
+int     compareComplexElements   (const complex double *left, const complex double *right);
 
 //функции вывода
-void    printIntArray       (const Array *array);
-
-
+void    printIntArray            (const Array *array);
+void    printRealArray           (const Array *array);
+void    printComplexArray        (const Array *array);
 
 // множество для работы с исключениями
 enum ERRORCODE_T
@@ -42,16 +49,14 @@ enum ERRORCODE_T
     WRONG_DIMENSION,            //длина массива меньше или равна 0
     NO_COMPARATOR,              //отсутствует функция сравнения
     DIFFERENT_ELEMENT_SIZE,     //разная длина элемента
-    DIFFERENT_COMPARATOR        //разные функции сравнения
+    DIFFERENT_COMPARATOR,       //разные функции сравнения
+    OVERFLOW_EL                 //переполнение
 };
-
-//функция для обработки ошибок
-void    handlerError        (CEXCEPTION_T EXPT);
 
 
 
 //основные функции
-void    sort            (Array *array);                                //требуется массив, в котором обязательно присутствует функция сравнения
+void    sort            (Array *array);                                // требуется массив, в котором обязательно присутствует функция сравнения
 
 Array   map             (void (*func)(void *element),
                          const Array *array);
@@ -63,7 +68,7 @@ void    *reduce         (void *(*func)(const void *first, const void *second),
 Array   where           (bool (*func)(const void *element),
                          const Array *array);
 
-Array   concatenat      (const Array *arr1,                             //конкатенация
-                         const Array *arr2);                            //требуются массивы с одинаковым типом данных
+Array   concatenat      (const Array *arr1,                             // конкатенация
+                         const Array *arr2);                            // требуются массивы с одинаковым типом данных
 
 #endif //ARRAY_H

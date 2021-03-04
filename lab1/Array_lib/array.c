@@ -8,8 +8,13 @@ void checkError (const Array *array)
         Throw(WRONG_ELEMENT_SIZE);
     if (array->dimension <= 0)
         Throw(WRONG_DIMENSION);
-}       //пока с регестрицией ошибок не работаю
+}                           // проверка на ошибки
+void destructArray (Array *array)
+{
+    free(array->arr);
+}
 
+// sort, reduce, map, where, concatenation
 void sort (Array *array)
 {
     checkError(array);
@@ -21,7 +26,6 @@ void sort (Array *array)
           array->elementSize,
           array->compare);
 }
-
 Array map (void (*func) (void *element), const Array *array)
 {
     checkError(array);
@@ -42,21 +46,6 @@ Array map (void (*func) (void *element), const Array *array)
 
     return result;
 }
-
-void *reduce (void *(*func) (const void *first, const void *second),
-              const Array *array,
-              const void *start_element)
-{
-    checkError(array);
-
-    void *res = func(array->arr, start_element);
-
-    for (size_t i = 1; i < array->dimension; i++)
-        res = func(array->arr + i * array->elementSize, res);
-
-    return res;
-}
-
 Array where (bool (*func) (const void *element), const Array *array)
 {
     checkError(array);
@@ -85,7 +74,17 @@ Array where (bool (*func) (const void *element), const Array *array)
 
     return result;
 }
+void *reduce (void *(*func) (const void *first, const void *second), const Array *array, const void *start_element)
+{
+    checkError(array);
 
+    void *res = func(array->arr, start_element);
+
+    for (size_t i = 1; i < array->dimension; i++)
+        res = func(array->arr + i * array->elementSize, res);
+
+    return res;
+}
 Array concatenat (const Array *arr1, const Array *arr2)
 {
     checkError(arr1);
@@ -114,7 +113,7 @@ Array concatenat (const Array *arr1, const Array *arr2)
     return result;
 }
 
-
+// int
 void printIntArray (const Array *array)
 {
     for (size_t i = 0; i < array->dimension; i++)
@@ -138,45 +137,83 @@ Array constructIntArray ()
     int *arr = malloc(sizeof(int) * dist);
     for (int i = 0; i < dist; i++)
         scanf("%d", &arr[i]);
-    getchar();
     Array array = {arr, dist, sizeof(int), compareIntElements};
+    while (getchar() != '\n');
     return array;
 }
-void destructIntArray (Array *array){
-    free(array->arr);
+
+// real
+void printRealArray (const Array *array)
+{
+    for (size_t i = 0; i < array->dimension; i++)
+        printf("%lf ", *((double *) (array->arr + i * array->elementSize)));
+    printf("\n");
+}
+int compareRealElements (const double *left, const double *right)
+{
+    if (*left < *right) return -1;
+    if (*left > *right) return 1;
+    return 0;
+}
+Array constructRealArray ()
+{
+    printf("Enter the number of elements\n");
+    int dist;
+    scanf("%d", &dist);
+    while (dist <= 0) {
+        printf("Error, invalid length, try again!\n");
+        scanf("%d", &dist);
+    }
+    printf("Enter array elements\n");
+    double *arr = malloc(sizeof(double) * dist);
+    for (int i = 0; i < dist; i++)
+        scanf("%lf", &arr[i]);
+    Array array = {arr, dist, sizeof(double), compareRealElements};
+    while (getchar() != '\n');
+    return array;
 }
 
-void handlerError (CEXCEPTION_T EXPT)
+// complex
+void printComplexArray (const Array *array)
 {
-    switch (EXPT) {
-        case NULL_POINTER:
-            printf("Array points to a null pointer!");
-            break;
-
-        case WRONG_ELEMENT_SIZE:
-            printf("Element length less than or equal to 0!");
-            break;
-
-        case WRONG_DIMENSION:
-            printf("Array length is less than or equal to 0!");
-            break;
-
-        case NO_COMPARATOR:
-            printf("No comparison function!");
-            break;
-
-        case DIFFERENT_ELEMENT_SIZE:
-            printf("Different element length!");
-            break;
-
-        case DIFFERENT_COMPARATOR:
-            printf("Different comparison functions!");
-            break;
-
-        default:
-            printf(
-                    "Unknown error %d",
-                    EXPT);
-            break;
+    for (size_t i = 0; i < array->dimension; i++){
+        complex double num = *((complex double*) (array->arr + i * array->elementSize));
+        printf("%1.f + ", creal(num));
+        printf("%1.fi ", cimag(num));
     }
-}               //не используется
+    printf("\n");
+}
+int compareComplexElements (const complex double *left, const complex double *right)
+{
+    double x1 = creal(*left), y1 = cimag(*left), x2 = creal(*right), y2 = cimag(*right);
+    if (x1 < x2) return -1;
+    if (x1 > x2) return 1;
+    if (x1 == x2 && y1 < y2) return -1;
+    if (x1 == x2 && y1 > y2) return 1;
+    return 0;
+}
+Array constructComplexArray ()
+{
+    printf("Enter the number of elements\n");
+    int dist;
+    scanf("%d", &dist);
+    while (dist <= 0) {
+        printf("Error, invalid length, try again!\n");
+        scanf("%d", &dist);
+    }
+    printf("Enter array elements\n");
+    complex double *arr = malloc(sizeof(complex double) * dist);
+    for (int i = 0; i < dist; i++){
+        double  x1, x2;
+        scanf("%lf", &x1);
+        getchar();
+        getchar();
+        getchar();
+        scanf("%lf", &x2);
+        complex double num = x1 + x2 * I;
+        arr[i] = num;
+    }
+    Array array = {arr, dist, sizeof(complex double), compareComplexElements};
+    while (getchar() != '\n');
+    return array;
+}
