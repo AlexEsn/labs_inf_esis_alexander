@@ -1,8 +1,11 @@
-set(BINARY ${CMAKE_PROJECT_NAME})
-
 set(SOURCE
     main.cpp
-)
+        tst_arr/test_dynamicarray.cpp
+        tst_arr/test_arraysequence.cpp
+        tst_list/test_linkedlist.cpp
+        tst_list/test_listsequence.cpp
+        tst_vector/test_vector.cpp
+        tst_matrix/test_matrix.cpp)
 
 ################################################################################
 #all qt settings
@@ -27,8 +30,8 @@ set(QT_LIB ${REQUIRED_LIBS_QUALIFIED})
 
 #############################################################################
 
-add_executable(${PROJECT_NAME}_tst ${SOURCE})
+add_executable(${CMAKE_PROJECT_NAME}_tst ${SOURCE})
 
-add_test(NAME ${BINARY}_tst COMMAND ${BINARY}_tst)
+add_test(NAME ${CMAKE_PROJECT_NAME}_tst COMMAND ${CMAKE_PROJECT_NAME}_tst)
 
-target_link_libraries(${BINARY}_tst ${QT_LIB} ${CMAKE_PROJECT_NAME}_lib gtest)
+target_link_libraries(${CMAKE_PROJECT_NAME}_tst ${QT_LIB} ${CMAKE_PROJECT_NAME}_lib gtest)

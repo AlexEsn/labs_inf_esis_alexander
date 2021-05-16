@@ -1,14 +1,12 @@
-set(BINARY ${CMAKE_PROJECT_NAME})
-
 set(SOURCE
     main.cpp
-    arr/arraysequence.cpp arr/arraysequence.h
-    arr/dynamicarray.cpp arr/dynamicarray.h
-    list/linkedlist.cpp list/linkedlist.h
-    list/listsequence.cpp list/listsequence.h
-    sequence/custom.cpp sequence/custom.h
-    sequence/sequence.cpp  sequence/sequence.h
-)
+    arr/arraysequence.h
+    arr/dynamicarray.h
+    list/linkedlist.h
+    list/listsequence.h
+    vector/vector.h
+    seq/sequence.h
+    matrix/matrix.h)
 
 ################################################################################
 #all qt settings
@@ -32,8 +30,8 @@ find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 
 #############################################################################
 
-add_executable(${PROJECT_NAME}_run ${SOURCE})
+add_executable(${CMAKE_PROJECT_NAME}_run ${SOURCE})
 
-target_link_libraries(${PROJECT_NAME}_run ${REQUIRED_LIBS_QUALIFIED})
+target_link_libraries(${CMAKE_PROJECT_NAME}_run ${REQUIRED_LIBS_QUALIFIED})
 
-add_library(${BINARY}_lib STATIC ${SOURCES})
+add_library(${PROJECT_NAME}_lib STATIC ${SOURCES})
