@@ -6,7 +6,7 @@ set(SOURCE
     list/listsequence.h
     vector/vector.h
     seq/sequence.h
-    matrix/matrix.h)
+    matrix/matrix.h matrix/triangularMatrix.h matrix/diagonalMatrix.h)
 
 ################################################################################
 #all qt settings
@@ -30,8 +30,12 @@ find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 
 #############################################################################
 
+find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+
+#############################################################################
+
 add_executable(${CMAKE_PROJECT_NAME}_run ${SOURCE})
 
-target_link_libraries(${CMAKE_PROJECT_NAME}_run ${REQUIRED_LIBS_QUALIFIED})
+target_link_libraries(${CMAKE_PROJECT_NAME}_run ${REQUIRED_LIBS_QUALIFIED} sfml-graphics sfml-audio)
 
 add_library(${PROJECT_NAME}_lib STATIC ${SOURCES})

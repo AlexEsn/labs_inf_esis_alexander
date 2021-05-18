@@ -35,7 +35,7 @@ public:
 };
 
 template<typename T>
-DynamicArray<T>::DynamicArray(): data_(nullptr), length_(0){}
+DynamicArray<T>::DynamicArray(): data_(nullptr), length_(0) {}
 
 template<typename T>
 DynamicArray<T>::DynamicArray(const T *data, int length) {
@@ -114,14 +114,23 @@ void DynamicArray<T>::Insert(int insert_index, T value) {
 
     new_data[insert_index] = value;
 
-    delete[] data_;
+    if (data_ != nullptr)
+        delete[] data_;
     data_ = new_data;
 }
 
 template<typename T>
 void DynamicArray<T>::Resize(int length) {
 
-    if (length < 0) throw std::length_error("negative size");
+    if (length < 0)
+        throw std::length_error("negative size");
+
+    if (length == 0) {
+        delete data_;
+        data_ = nullptr;
+        return;
+    }
+
     T *new_data = new T[length];
 
     if (length > length_)
@@ -136,8 +145,11 @@ void DynamicArray<T>::Resize(int length) {
 
 template<typename T>
 DynamicArray<T>::~DynamicArray() {
+
     length_ = 0;
-    if(data_ != nullptr) delete[] data_;
+    if (data_ != nullptr)
+        delete[] data_;
+
 }
 
 //#include "dynamicarray.ini"

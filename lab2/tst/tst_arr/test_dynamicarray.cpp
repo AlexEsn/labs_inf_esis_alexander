@@ -9,12 +9,7 @@ TEST(ConstructDynamicArray, BuildArrayWithDefaultConstr) {
 
 TEST(ConstructDynamicArray, BuildArrayWithLight) {
     DynamicArray<int> arr1(10);
-    try {
-        DynamicArray<int> arr3(-10);
-    }
-    catch (std::exception &e) {
-        EXPECT_EQ(e.what(), std::string("negative size"));
-    }
+    ASSERT_ANY_THROW(DynamicArray<int> arr3(-10));
 }
 
 TEST(ConstructDynamicArray, BuildArrayWithArr) {

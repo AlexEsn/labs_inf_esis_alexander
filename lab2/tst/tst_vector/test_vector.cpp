@@ -9,12 +9,7 @@ TEST(ConstructVector, BuildVectorWithDefaultConstr) {
 
 TEST(ConstructVector, BuildVectorWithLight) {
     vector<int> v1(10);
-    try {
-        vector<int> v3(-10);
-    }
-    catch (std::exception &e) {
-        EXPECT_EQ(e.what(), std::string("negative size"));
-    }
+    EXPECT_ANY_THROW(vector<int> v3(-10));
     EXPECT_EQ(v1.size(), 10);
 }
 
@@ -60,4 +55,6 @@ TEST(vector, Resize) {
     EXPECT_EQ(v1.size(), 12);
     v1.resize(8);
     EXPECT_EQ(v1.size(), 8);
+    v1.resize(1);
+    EXPECT_EQ(v1.size(), 1);
 }

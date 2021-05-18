@@ -9,20 +9,15 @@
 template <class T>
 class Matrix{
 
-private:
+protected:
     int num_rows_;
     int num_columns_;
-
     vector<vector<T>> elements_;
 
 public:
     Matrix(): num_rows_(0), num_columns_(0), elements_(0){}
     Matrix(int num_rows, int num_columns) {
         Reset(num_rows, num_columns);
-    }
-    Matrix(const Matrix<T>& matrix){
-        this->Reset(matrix.num_rows_, matrix.num_columns_);
-        elements_ = matrix.elements_;
     }
 
     void Reset(int num_rows, int num_columns) {
@@ -39,9 +34,9 @@ public:
         num_rows_ = num_rows;
         num_columns_ = num_columns;
 
-        elements_.resize(num_rows);
+        elements_.resize(num_rows_);
         for (int i = 0; i < num_rows_; ++i) {
-            elements_[i].resize(num_columns);
+            elements_[i].resize(num_columns_);
         }
     }
     int& At(int row, int column) {
@@ -56,12 +51,65 @@ public:
     int GetNumColumns() const {
         return num_columns_;
     }
+    int GetSize() const{
+        return num_rows_;
+    }
+    vector<int>& operator[] (int i) {
+        return elements_[i];
+    }
 
-    friend bool operator==(const Matrix<T>& one, const Matrix<T>& two);
-    friend Matrix<T> operator+(const Matrix<T>& one, const Matrix<T>& two);
-    friend std::istream& operator>>(std::istream& in, Matrix<T>& matrix);
-    friend std::ostream& operator<<(std::ostream& out, const Matrix<T>& matrix);
+    Matrix<T>& operator=(const Matrix<T>& matrix) {
+        this->num_rows_ = matrix.num_rows_;
+        this->num_columns_ = matrix.num_columns_;
+        for (int i = 0; i < matrix.num_rows_; ++i) {
+            for (int j = 0; j < matrix.num_columns_; ++j) {
+                this->elements_[i][j] = matrix.elements_.at(i).at(j);
+            }
+        }
+        return *this;
+    }
+
+    T CalculatingTheNormOfMatrix(){//вычисление нормы данной матрицы
+        if(this != nullptr && this->GetSize() != 0){
+            T result = this[0][0];//в качестве начального значения результата берем элемент с индексами i = 0 и j = 0
+            for (int i = 0; i < this->GetSize(); ++i) {
+                T tmp = 0;
+                for (int j = 0; j < i + 1; ++j) {
+                    tmp += this[i][j];
+                }
+                if(tmp >= result)
+                    result = tmp;
+            }
+            return result;
+        }else{
+            std::cout << "Error of calculations ! ! !\n";
+            return -1;//возвращаем -1 так как нужно вернуть какое то число
+        }
+
+    }
+
+    template <typename U>
+    friend Matrix<U> operator+(const Matrix<U>& one, const Matrix<U>& two);
+    template <typename U>
+    friend bool operator==(const Matrix<U>& one, const Matrix<U>& two);
+    template <typename U>
+    friend std::istream& operator>>(std::istream& in, Matrix<U>& matrix);
+    template <typename U>
+    friend std::ostream& operator<<(std::ostream& out, const Matrix<U>& matrix);
+    template <class U>
+    friend Matrix<U> operator*(U lambda, const Matrix<U>& matrix);
 };
+
+template <class T>
+Matrix<T> operator*(T lambda, const Matrix<T>& matrix){
+    Matrix<T> answer(matrix.num_rows_, matrix.num_columns_);
+    for (int i = 0; i < matrix.GetNumRows(); ++i) {
+        for (int j = 0; j < matrix.GetNumColumns(); ++j) {
+            answer.elements_[i][j] = lambda * matrix.elements_.at(i).at(j);
+        }
+    }
+    return answer;
+}
 
 template <class T>
 bool operator==(const Matrix<T>& one, const Matrix<T>& two) {

@@ -12,9 +12,7 @@ private:
 public:
     //Constructors
     ArraySequence();
-
     explicit ArraySequence(int length);
-
     ArraySequence(const T *data, int length);
 
     //Copy constructor
@@ -22,22 +20,18 @@ public:
 
     //Decomposition
     T &GetFirst() override;
-
     T &GetLast() override;
-
     T &Get(int index) override;
-
     T &operator[](int index) override;
-
-//    Sequence<T>* GetSubSequence(int start_index, int end_index) const override;     //TODO
     [[nodiscard]] size_t GetLength() const override;
 
     //Operations
     void Append(const T &value) override;
-
     void Prepend(const T &value) override;
-
     void InsertAt(const T &value, int index) override;
+    void Resize(int length) override;
+
+//    Sequence<T>* GetSubSequence(int start_index, int end_index) const override;     //TODO
 //    Sequence<T>* Concat(Sequence <T> *seq) const override;          //TODO
 
     //Destructor
@@ -103,4 +97,9 @@ void ArraySequence<T>::InsertAt(const T &value, int index) {
 template<typename T>
 ArraySequence<T>::~ArraySequence() {
     delete array_;
+}
+
+template<class T>
+void ArraySequence<T>::Resize(int length) {
+    array_->Resize(length);
 }

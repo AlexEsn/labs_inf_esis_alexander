@@ -15,28 +15,12 @@ public:
     vector(const T *data, int length);
     vector(const vector<T> &vector);
 
-    vector& operator=(const vector<T>& right) {
-        if (this == &right) {
-            return *this;
-        }
-        for(int i = 0; i < right.size(); i++){
-            this->at(i) = right.at(i);
-        }
-        return *this;
-    }
-
     [[nodiscard]] size_t size() const;
-
     [[nodiscard]] bool empty() const;
-
     T &operator[](int index);
-
     T &at(int index);
-
     T &at(int index) const;
-
     void resize(int length);
-
     void push_back(const T &value);
 
     ~vector();
@@ -101,13 +85,5 @@ bool vector<T>::empty() const {
 
 template<class T>
 void vector<T>::resize(int length) {
-    if (length < 0)
-        throw std::out_of_range("negative length");
-
-    if (length > this->size())
-        this->array_->Get(length - 1);
-    else {
-        delete this->array_;
-        this->array_ = new ArraySequence<T>(length);
-    }
+    array_->Resize(length);
 }

@@ -28,6 +28,7 @@ public:
     void Append(const T& value) override;
     void Prepend(const T& value) override;
     void InsertAt(const T& value, int index) override;
+    void Resize(int length) override;
 //    Sequence<T>* Concat(Sequence <T> *seq) const override ;                               //TODO
 
     //Destructor
@@ -98,4 +99,9 @@ ListSequence<T>::~ListSequence()
 template<class T>
 T &ListSequence<T>::operator[](int index){
     return Get(index);
+}
+
+template<class T>
+void ListSequence<T>::Resize(int length) {
+
 }
