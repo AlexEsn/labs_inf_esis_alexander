@@ -1,12 +1,17 @@
 set(SOURCE
-    main.cpp
-    arr/arraysequence.h
-    arr/dynamicarray.h
-    list/linkedlist.h
-    list/listsequence.h
-    vector/vector.h
-    seq/sequence.h
-    matrix/matrix.h matrix/triangularMatrix.h matrix/diagonalMatrix.h graph/graph.cpp graph/graph.h matrix/squareMatrix.h)
+        main.cpp
+        arr/arraysequence.h
+        arr/dynamicarray.h
+        list/linkedlist.h
+        list/listsequence.h
+        vector/vector.h
+        seq/sequence.h
+        matrix/matrix.h
+        matrix/squareMatrix.h
+        matrix/triangularMatrix.h
+        matrix/diagonalMatrix.h
+        graph/graph.h graph/graph.cpp
+        )
 
 ################################################################################
 #all qt settings
@@ -29,7 +34,7 @@ endif ()
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 
 #############################################################################
-
+#SFML
 find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
 
 #############################################################################

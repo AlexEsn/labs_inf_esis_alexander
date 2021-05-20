@@ -1,5 +1,5 @@
 set(SOURCE
-    main.cpp
+        main.cpp
         tst_arr/test_dynamicarray.cpp
         tst_arr/test_arraysequence.cpp
         tst_list/test_linkedlist.cpp
