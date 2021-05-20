@@ -9,15 +9,14 @@ TEST(ConstructDynamicArray, BuildArrayWithDefaultConstr) {
 
 TEST(ConstructDynamicArray, BuildArrayWithLight) {
     DynamicArray<int> arr1(10);
-    ASSERT_ANY_THROW(DynamicArray<int> arr3(-10));
+    ASSERT_ANY_THROW(DynamicArray<int> arr2(-10));
 }
 
 TEST(ConstructDynamicArray, BuildArrayWithArr) {
     int arr_int[4] = {1, 2, 3, 4};
     DynamicArray<int> arr1(arr_int, 4);
     EXPECT_EQ(arr1[3], 4);
-    DynamicArray<int> arr2(arr1);
-    EXPECT_EQ(arr2[3], 4);
+    ASSERT_ANY_THROW(DynamicArray<int> arr2(arr_int, -4));
 }
 
 TEST(ConstructDynamicArray, CopyConstr) {
@@ -41,9 +40,10 @@ TEST(DynamicArray, GetLight) {
 
 TEST(DynamicArray, Resize) {
     int arr_int[4] = {1, 2, 3, 4};
-    DynamicArray<int> arr1(arr_int, 4);
-    arr1.Resize(2);
-    EXPECT_EQ(arr1[1], 2);
+    DynamicArray<int> arr(arr_int, 4);
+    arr.Resize(2);
+    EXPECT_EQ(arr[1], 2);
+    ASSERT_ANY_THROW(arr.Resize(-10));
 }
 
 TEST(DynamicArray, Insert) {

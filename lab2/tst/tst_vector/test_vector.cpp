@@ -58,3 +58,35 @@ TEST(vector, Resize) {
     v1.resize(1);
     EXPECT_EQ(v1.size(), 1);
 }
+
+TEST(vector, Sum) {
+    int v_int1[4] = {1, 2, 3, 4};
+    vector<int> v1(v_int1, 4);
+    int v_int2[2] = {1, 2};
+    vector<int> v2(v_int2, 2);
+    EXPECT_EQ((v1 + v1).size(), 4);
+    EXPECT_EQ((v1 + v1).at(2), 6);
+    EXPECT_EQ((v1 + v2).at(3), 4);
+}
+
+TEST(vector, MultiScalar) {
+    int v_int[4] = {1, 2, 3, 4};
+    int s = 3;
+    vector<int> v(v_int, 4);
+    EXPECT_EQ((3 * v).size(), 4);
+    EXPECT_EQ((3 * v).at(0), 3);
+}
+
+TEST(vector, CalculatingTheNormOfMatrix) {
+    int v_int[4] = {1, 2, 3, 4};
+    vector<int> v(v_int, 4);
+    EXPECT_EQ(v.CalculatingTheNormOfVector(), static_cast<int>(sqrt(30)));
+}
+
+TEST(vector, ScalarMulti) {
+    int v_int1[4] = {1, 2, 3, 4};
+    vector<int> v1(v_int1, 4);
+    int v_int2[2] = {1, 2};
+    vector<int> v2(v_int2, 2);
+    EXPECT_EQ(v1 * v2, 5);
+}

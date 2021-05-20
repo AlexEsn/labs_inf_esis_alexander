@@ -40,3 +40,20 @@ TEST(ListSequence, Get){
     list[2] = 5;
     EXPECT_EQ(list[2], 5);
 }
+
+TEST(ListSequence, GetSubsequence){
+    int arr[4] = {1, 2, 3, 4};
+    ListSequence<int> list1(arr, 4);
+    EXPECT_EQ(list1.GetSubSequence(2, 3)->GetLength(), 2);
+    EXPECT_EQ(list1.GetSubSequence(2, 3)->Get(0), 3);
+    EXPECT_EQ(list1.GetSubSequence(2, 3)->Get(1), 4);
+    ASSERT_ANY_THROW(list1.GetSubSequence(-1, 10));
+}
+
+TEST(ListSequence, Concat){
+    int arr[4] = {1, 2, 3, 4};
+    ListSequence<int> list1(arr, 4);
+    ListSequence<int> array2(arr, 4);
+    EXPECT_EQ(list1.Concat(&array2)->GetLength(), 8);
+    EXPECT_EQ(list1.Concat(&array2)->Get(4), 1);
+}

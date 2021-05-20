@@ -6,7 +6,7 @@ set(SOURCE
     list/listsequence.h
     vector/vector.h
     seq/sequence.h
-    matrix/matrix.h matrix/triangularMatrix.h matrix/diagonalMatrix.h)
+    matrix/matrix.h matrix/triangularMatrix.h matrix/diagonalMatrix.h graph/graph.cpp graph/graph.h matrix/squareMatrix.h)
 
 ################################################################################
 #all qt settings
