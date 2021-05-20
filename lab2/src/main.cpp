@@ -14,17 +14,17 @@ int main() {
 
     int menu, display_mode;
     cout << "Graph calculator" << endl;
-    cout << "Выберите действие:" << endl;
-    cout << "1. Объединение графов" << endl;
-    cout << "2. Пересечение графов" << endl;
+    cout << "Select an action:" << endl;
+    cout << "1. Union of graphs" << endl;
+    cout << "2. Intersection of graphs" << endl;
 
     cin >> menu;
 
-    cout
-            << "Выберите режим отображения: (отображение в прямоугольниках плохо оптимизирована, рекомендуется использовать окружности"
-            << endl;
-    cout << "1. В окружностях" << endl;
-    cout << "2. В прямоугольниках" << endl;
+    cout << "Select the display mode: (display in rectangles is poorly optimized,"
+            "it is recommended to use circles"
+         << endl;
+    cout << "1. In circles" << endl;
+    cout << "2. In rectangles" << endl;
 
 
     cin >> display_mode;
@@ -63,16 +63,23 @@ int main() {
         }
         window.clear(sf::Color::Black);
 
-        if (display_mode == 1) {
-            graph1.drawInCircle(window, 1);
-            graph2.drawInCircle(window, 2);
-            graph3.drawInCircle(window, 3);
+        switch (display_mode) {
+            case 1: {
+                graph1.drawInCircle(window, 1);
+                graph2.drawInCircle(window, 2);
+                graph3.drawInCircle(window, 3);
+            }
+                break;
+            case 2: {
+                graph1.drawInRectangle(window, 1);
+                graph2.drawInRectangle(window, 2);
+                graph3.drawInRectangle(window, 3);
+            }
+                break;;
+            default:
+                return -1;
+
         }
-        else if (display_mode == 2) {
-            graph1.drawInRectangle(window, 1);
-            graph2.drawInRectangle(window, 2);
-            graph3.drawInRectangle(window, 3);
-        } else return -1;
 
         window.display();
     }
