@@ -71,6 +71,13 @@ public:
             return node_->data_;
         }
 
+        T &operator*() {
+            if (node_->IsEmpty_ == true)
+                throw std::out_of_range("tried to dereference an empty iterator");
+
+            return node_->data_;
+        }
+
     private:
         Node *node_;
 

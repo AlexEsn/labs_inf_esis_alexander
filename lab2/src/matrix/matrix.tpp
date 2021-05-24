@@ -51,11 +51,6 @@ int Matrix<T>::GetNumColumns() const {
 }
 
 template<class T>
-int Matrix<T>::GetSize() const {
-    return num_rows_;
-}
-
-template<class T>
 vector<T> &Matrix<T>::operator[](int i) {
     return elements_[i];
 }
@@ -75,26 +70,6 @@ Matrix<T> &Matrix<T>::operator=(const Matrix<T> &matrix) {
         }
     }
     return *this;
-}
-
-template<class T>
-T Matrix<T>::CalculatingTheNormOfMatrix() {
-    if (this != nullptr && this->GetSize() != 0) {
-        T result = this[0][0];
-        for (int i = 0; i < this->GetSize(); ++i) {
-            T tmp = 0;
-            for (int j = 0; j < i + 1; ++j) {
-                tmp += this[i][j];
-            }
-            if (tmp >= result)
-                result = tmp;
-        }
-        return result;
-    } else {
-        throw std::logic_error("Error of calculations");
-        return -1;
-    }
-
 }
 
 template<class T>

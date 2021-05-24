@@ -7,6 +7,8 @@ include_directories(src)
 
 add_subdirectory(src)
 add_subdirectory(tst)
+add_subdirectory(bench)
 add_subdirectory(lib/googletest)
+add_subdirectory(bench/benchmark)
 
 enable_testing()

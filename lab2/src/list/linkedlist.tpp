@@ -59,7 +59,6 @@ void LinkedList<T>::push_front(T node_val) {
     node_to_add->pPrev = nullptr;
     head_->pPrev = node_to_add;
     head_ = node_to_add;
-    //так как head_ изменился, нужно изменить begin_it_
     begin_it_ = iterator(head_);
 }
 
@@ -73,7 +72,6 @@ void LinkedList<T>::push_back(T node_val) {
         node_to_add->pPrev = teal_->pPrev;
         teal_->pPrev->pNext = node_to_add;
         teal_->pPrev = node_to_add;
-        //изменяем end_it_
         end_it_ = iterator(teal_);
     }
 
@@ -82,7 +80,6 @@ void LinkedList<T>::push_back(T node_val) {
 template<typename T>
 bool LinkedList<T>::insert_after(T node_val, const LinkedList::iterator &key_i) {
     for (Node *dn = head_; dn != teal_; dn = dn->pNext) {
-        //Найден ли узел для заданного итератора
         if (dn == key_i.node_) {
             Node *node_to_add = new Node(node_val);
             node_to_add->pPrev = dn;

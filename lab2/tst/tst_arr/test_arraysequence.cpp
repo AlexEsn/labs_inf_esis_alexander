@@ -32,6 +32,8 @@ TEST(ArraySequence, Apped){
     ArraySequence<int> array(arr, 4);
     array.Append(10);
     EXPECT_EQ(array[0], 10);
+
+
 }
 
 TEST(ArraySequence, Prepend){

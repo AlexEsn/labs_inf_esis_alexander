@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include "arr/dynamicarray.h"
 
-
 TEST(ConstructDynamicArray, BuildArrayWithDefaultConstr) {
     DynamicArray<int> arr;
     EXPECT_EQ(arr.GetLength(), 0);

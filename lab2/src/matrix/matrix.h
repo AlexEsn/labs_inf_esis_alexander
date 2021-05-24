@@ -21,14 +21,10 @@ public:
     [[nodiscard]] int At(int row, int column) const;
     [[nodiscard]] int GetNumRows() const;
     [[nodiscard]] int GetNumColumns() const;
-    [[nodiscard]] int GetSize() const;
     vector<T>& operator[] (int i);
     vector<T>& operator[] (int i) const;
 
     Matrix<T>& operator=(const Matrix<T>& matrix);
-
-
-    T CalculatingTheNormOfMatrix();
 
     template <typename U>
     friend Matrix<U> operator+(const Matrix<U>& one, const Matrix<U>& two);

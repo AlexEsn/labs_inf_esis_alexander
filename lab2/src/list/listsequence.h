@@ -14,7 +14,7 @@ public:
     //Constructors
     ListSequence();
     ListSequence(T* data, int length);
-    explicit ListSequence(LinkedList<T>& list);
+    ListSequence(LinkedList<T>& list);
 
     //Decomposition
     T& GetFirst() override;

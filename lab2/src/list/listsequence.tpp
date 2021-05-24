@@ -28,6 +28,8 @@ T &ListSequence<T>::GetLast() {
 
 template<typename T>
 T &ListSequence<T>::Get(int index) {
+    if (index >= this->GetLength())
+        this->Resize(index + 1);
     auto it = list_->get_nth(index);
     return *it;
 }
@@ -71,7 +73,11 @@ T &ListSequence<T>::operator[](int index) {
 
 template<class T>
 void ListSequence<T>::Resize(int length) {
-
+    if (length > this->GetLength()){
+        for (int i = GetLength(); i < length; ++i) {
+            this->Append(0);
+        }
+    }
 }
 
 template<class T>

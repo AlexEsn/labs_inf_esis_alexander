@@ -41,6 +41,12 @@ TEST(ListSequence, Get){
     EXPECT_EQ(list[2], 5);
 }
 
+TEST(ListSequence, Resize){
+    ListSequence<int> list;
+    list.Resize(10);
+    EXPECT_EQ(list.GetLength(), 10);
+}
+
 TEST(ListSequence, GetSubsequence){
     int arr[4] = {1, 2, 3, 4};
     ListSequence<int> list1(arr, 4);

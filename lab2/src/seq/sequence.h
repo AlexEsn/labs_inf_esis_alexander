@@ -16,7 +16,7 @@ public:
     virtual void Prepend(const T& item) = 0;
     virtual void InsertAt(const T& item, int index) = 0;
     virtual void Resize(int length) = 0;
-    virtual Sequence<T> *Concat(Sequence<T> *Sequence) const = 0;                               //TODO дописать
-    virtual Sequence<T> *GetSubSequence(int start_index, int end_index) const = 0;              //TODO дописать
+    virtual Sequence<T> *Concat(Sequence<T> *Sequence) const = 0;
+    virtual Sequence<T> *GetSubSequence(int start_index, int end_index) const = 0;
 
 };
