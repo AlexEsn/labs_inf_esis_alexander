@@ -1,7 +1,7 @@
 #pragma once
 
-#include "list/listsequence.h"
-#include "arr/arraysequence.h"
+#include "../list/listsequence.h"
+#include "../arr/arraysequence.h"
 #include <cmath>
 
 template<class T>

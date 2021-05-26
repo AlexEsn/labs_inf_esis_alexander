@@ -411,17 +411,6 @@ using ::testing::MatchesRegex;
   EXPECT_THAT(bar_string, MatchesRegex("\\w*\\d+"));
 ```
 
-If the string contains a well-formed HTML or XML document, you can check whether
-its DOM tree matches an
-[XPath expression](http://www.w3.org/TR/xpath/#contents):
-
-```c++
-// Currently still in //template/prototemplate/testing:xpath_matcher
-#include "template/prototemplate/testing/xpath_matcher.h"
-using ::prototemplate::testing::MatchesXPath;
-EXPECT_THAT(html_string, MatchesXPath("//a[text()='click here']"));
-```
-
 ### Windows HRESULT assertions
 
 These assertions test for `HRESULT` success or failure.
@@ -651,7 +640,7 @@ exception and avoid the crash. If you want to verify exceptions thrown by your
 code, see [Exception Assertions](#ExceptionAssertions).
 
 If you want to test `EXPECT_*()/ASSERT_*()` failures in your test code, see
-Catching Failures
+["Catching" Failures](#catching-failures).
 
 ### How to Write a Death Test
 
@@ -1537,7 +1526,7 @@ INSTANTIATE_TEST_SUITE_P(
       std::string name = absl::StrCat(
           std::get<0>(info.param) == MyType::MY_FOO ? "Foo" : "Bar",
           std::get<1>(info.param));
-      absl::c_replace_if(name, [](char c) { return !std::isalnum(c); }, '');
+      absl::c_replace_if(name, [](char c) { return !std::isalnum(c); }, '_');
       return name;
     });
 ```

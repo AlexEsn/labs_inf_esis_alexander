@@ -1,9 +1,7 @@
-set(SOURCE
-        main.cpp
-        )
+set(SOURCES main.cpp)
 
-add_executable(${CMAKE_PROJECT_NAME}_bench ${SOURCE})
+add_executable(${CMAKE_PROJECT_NAME}_bench ${SOURCES})
 
-find_package(benchmark REQUIRED)
+include_directories(../src)
 
-target_link_libraries(${CMAKE_PROJECT_NAME}_bench ${CMAKE_PROJECT_NAME}_lib benchmark::benchmark)
+target_link_libraries(${CMAKE_PROJECT_NAME}_bench benchmark::benchmark)

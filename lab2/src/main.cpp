@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "graph/graph.h"
 
+#define SFML_NO_DEPRECATED_WARNINGS
 #define WIDTH 900.f
 #define HEIGHT 700.f
 

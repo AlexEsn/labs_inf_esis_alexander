@@ -1,4 +1,4 @@
-set(SOURCE
+set(SOURCES
         main.cpp
         arr/arraysequence.h
         arr/dynamicarray.h
@@ -39,8 +39,6 @@ find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
 
 #############################################################################
 
-add_executable(${CMAKE_PROJECT_NAME}_run ${SOURCE})
+add_executable(${CMAKE_PROJECT_NAME}_run ${SOURCES})
 
-target_link_libraries(${CMAKE_PROJECT_NAME}_run ${REQUIRED_LIBS_QUALIFIED} sfml-graphics sfml-audio)
-
-add_library(${PROJECT_NAME}_lib STATIC ${SOURCES})
+target_link_libraries(${CMAKE_PROJECT_NAME}_run ${REQUIRED_LIBS_QUALIFIED} sfml-graphics)

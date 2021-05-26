@@ -1,4 +1,4 @@
-set(SOURCE
+set(SOURCES
         main.cpp
         tst_arr/test_dynamicarray.cpp
         tst_arr/test_arraysequence.cpp
@@ -29,9 +29,14 @@ find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 set(QT_LIB ${REQUIRED_LIBS_QUALIFIED})
 
 #############################################################################
+enable_testing()
 
-add_executable(${CMAKE_PROJECT_NAME}_tst ${SOURCE})
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+add_executable(${CMAKE_PROJECT_NAME}_tst ${SOURCES})
+
+include_directories(../src)
+
+target_link_libraries(${CMAKE_PROJECT_NAME}_tst ${QT_LIB} gtest gtest_main)
 
 add_test(NAME ${CMAKE_PROJECT_NAME}_tst COMMAND ${CMAKE_PROJECT_NAME}_tst)
-
-target_link_libraries(${CMAKE_PROJECT_NAME}_tst ${QT_LIB} ${CMAKE_PROJECT_NAME}_lib gtest)
