@@ -72,3 +72,11 @@ TEST(LinkedList, FindIterator) {
     LinkedList<int>::iterator it2 = list.end();
     EXPECT_EQ(it1, it2);
 }
+
+TEST(LinkedList, RemoveIt) {
+    int arr_int[4] = {1, 2, 3, 4};
+    LinkedList<int> list(arr_int, 4);
+    LinkedList<int>::iterator it = list.begin();
+    list.remove_it(it);
+    EXPECT_EQ(list.GetLength(), 3);
+}

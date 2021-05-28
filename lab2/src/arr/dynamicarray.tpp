@@ -1,3 +1,6 @@
+
+#include "dynamicarray.h"
+
 template<typename T>
 DynamicArray<T>::DynamicArray(): data_(nullptr), length_(0) {}
 
@@ -115,4 +118,24 @@ DynamicArray<T>::~DynamicArray() {
     if (data_ != nullptr)
         delete[] data_;
 
+}
+
+template<class T>
+void DynamicArray<T>::Delete(int index) {
+    if (index >= length_ || index < 0)
+        throw std::out_of_range("index is more then length or negative");
+
+    length_--;
+
+    T *new_data = new T[length_];
+
+    for (size_t i = 0; i < index; i++)
+        new_data[i] = data_[i];
+
+    for (size_t i = index; i < length_; i++)
+        new_data[i] = data_[i + 1];
+
+    if (data_ != nullptr)
+        delete[] data_;
+    data_ = new_data;
 }

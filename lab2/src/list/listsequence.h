@@ -29,6 +29,7 @@ public:
     void Prepend(const T& value) override;
     void InsertAt(const T& value, int index) override;
     void Resize(int length) override;
+    void Remove(int index) override;
     Sequence<T>* GetSubSequence(int start_index, int end_index) const override;
     Sequence<T>* Concat(Sequence <T> *seq) const override;
 

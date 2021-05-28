@@ -129,19 +129,20 @@ T LinkedList<T>::remove_back() {
 template<typename T>
 bool LinkedList<T>::remove_it(LinkedList::iterator &key_i) {
     for (Node *dn = head_; dn != teal_; dn = dn->pNext) {
-        if (dn == key_i.the_node) {
-            dn->pPrev->pNext = dn->pNext;
-            dn->pNext->pPrev = dn->pPrev;
+        if (dn == key_i.node_) {
+            if (dn != head_)
+                dn->pPrev->pNext = dn->pNext;
+            else
+                head_ = dn->pNext;
+            if (dn != teal_)
+                dn->pNext->pPrev = dn->pPrev;
+            else
+                teal_ = dn->pPrev;
             delete dn;
-            key_i.the_node = 0;
+            key_i.node_ = 0;
             return true;
         }
     }
 
     return false;
-}
-
-template<typename T>
-LinkedList<T> *LinkedList<T>::GetSubList(int start_index, int end_index) const {
-    return nullptr;
 }

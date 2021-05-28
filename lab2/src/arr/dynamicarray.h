@@ -28,6 +28,7 @@ public:
     void Set(int index, T value);
     void Resize(int length);
     void Insert(int insert_index, T value);
+    void Delete(int index);
 
     //Destructor
     ~DynamicArray();

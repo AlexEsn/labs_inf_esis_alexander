@@ -125,22 +125,18 @@ public:
         //Если node_val нет в списке возвращает end_it_
         return end_it_;
     }
-    iterator get_nth(int element_num) const {
-        if (element_num < 0)
+    iterator get_nth(int index) const {
+        if (index < 0)
             return end_it_;
 
         int count = 0;
         for (Node *dn = head_; dn != teal_; dn = dn->pNext) {
-            if (count++ == element_num)
+            if (count++ == index)
                 return iterator(dn);
         }
 
         return end_it_;
     }
-
-    //Decomposition
-    LinkedList<T> *Concat(LinkedList<T> *list) const {};
-    LinkedList<T> *GetSubList(int start_index, int end_index) const;
 
     //Destructor
     ~LinkedList();

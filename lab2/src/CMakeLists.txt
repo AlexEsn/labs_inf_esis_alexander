@@ -11,6 +11,7 @@ set(SOURCES
         matrix/triangularMatrix.h
         matrix/diagonalMatrix.h
         graph/graph.h graph/graph.cpp
+        queue/queue.h
         )
 
 ################################################################################

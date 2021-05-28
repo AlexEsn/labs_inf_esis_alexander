@@ -3,9 +3,9 @@
 Graph::Graph(float width, float height) {
     width_ = width;
     height_ = height;
-    std::cout << "Введите размер (только одно число не менее 3) и матрицу смежности:" << std::endl;
+    std::cout << "Enter size (only one number at least 3) and adjacency matrix:" << std::endl;
     std::cin >> matrix_;
-    if(matrix_.GetSize() < 3) exit(-1);
+    if (matrix_.GetSize() < 3) exit(-1);
 }
 
 Graph::Graph(const SquareMatrix<bool> &matrix, float width, float height) {
@@ -58,19 +58,19 @@ void Graph::drawInCircle(sf::RenderWindow &window, int position) {
     }
 
     sf::Font font;
-    font.loadFromFile("font/arial.ttf");
-    sf::Text text("", font,
-                  18);
+    font.loadFromFile("../../font/arial.ttf");
+    sf::Text text("", font,18);
 
     for (int i = 0; i < points.size(); ++i) {
         sf::CircleShape shapes(vertex_raduis);
         shapes.setFillColor(sf::Color::White);
         shapes.setPosition(points[i].first - vertex_raduis, points[i].second - vertex_raduis);
         window.draw(shapes);
-        text.setColor(sf::Color::Red);
+        text.setFillColor(sf::Color::Red);
         text.setString(std::to_string(i + 1));
-        text.setPosition(points[i].first - vertex_raduis / 2,
-                         points[i].second - vertex_raduis / 2);
+        sf::FloatRect bounds = text.getLocalBounds();
+        text.setOrigin(bounds.left + bounds.width / 2.0f,bounds.top + bounds.height / 2.0f);
+        text.setPosition(points[i].first, points[i].second);
         window.draw(text);
     }
 }
@@ -138,7 +138,7 @@ void Graph::drawInRectangle(sf::RenderWindow &window, int position) {
         shapes.setFillColor(sf::Color::White);
         shapes.setPosition(points[i].first - radius, points[i].second - radius);
         window.draw(shapes);
-        text.setColor(sf::Color::Red);
+        text.setFillColor(sf::Color::Red);
         text.setString(std::to_string(i + 1));
         text.setPosition(points[i].first - radius / 2, points[i].second - radius);
         window.draw(text);

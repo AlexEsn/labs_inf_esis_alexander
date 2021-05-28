@@ -41,6 +41,15 @@ TEST(ListSequence, Get){
     EXPECT_EQ(list[2], 5);
 }
 
+TEST(ListSequence, Remove){
+    int arr[4] = {1, 2, 3, 4};
+    ListSequence<int> list(arr, 4);
+    list.Remove(0);
+    list.Remove(0);
+    list.Remove(0);
+    EXPECT_EQ(list[0], 4);
+}
+
 TEST(ListSequence, Resize){
     ListSequence<int> list;
     list.Resize(10);

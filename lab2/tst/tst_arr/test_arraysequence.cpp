@@ -57,6 +57,13 @@ TEST(ArraySequence, Get){
     EXPECT_EQ(array[2], 22);
 }
 
+TEST(ArraySequence, Remove){
+    int arr[4] = {1, 2, 3, 4};
+    ArraySequence<int> array(arr, 4);
+    array.Remove(1);
+    EXPECT_EQ(array[1], 3);
+}
+
 TEST(ArraySequence, GetSubsequence){
     int arr[4] = {1, 2, 3, 4};
     ArraySequence<int> array1(arr, 4);

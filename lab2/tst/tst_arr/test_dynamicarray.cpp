@@ -51,3 +51,10 @@ TEST(DynamicArray, Insert) {
     arr1.Insert(2, 2);
     EXPECT_EQ(arr1[2], 2);
 }
+
+TEST(DynamicArray, Delete) {
+    int arr_int[4] = {1, 3, 4, 5};
+    DynamicArray<int> arr(arr_int, 4);
+    arr.Delete(2);
+    EXPECT_EQ(arr[2], 5);
+}

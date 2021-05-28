@@ -92,3 +92,8 @@ Sequence<T> *ArraySequence<T>::Concat(Sequence<T> *seq) const {
     return new ArraySequence<T>(new_arr, seq->GetLength() + this->GetLength());
 }
 
+template<class T>
+void ArraySequence<T>::Remove(int index) {
+    array_->Delete(index);
+}
+

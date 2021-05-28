@@ -2,7 +2,7 @@
 #include "listsequence.h"
 
 template<typename T>
-ListSequence<T>::ListSequence(): list_(new LinkedList<T>()) {}
+ListSequence<T>::ListSequence(): list_(new LinkedList<T>) {}
 
 template<typename T>
 ListSequence<T>::ListSequence(T *data, int length) {
@@ -10,20 +10,18 @@ ListSequence<T>::ListSequence(T *data, int length) {
 }
 
 template<typename T>
-ListSequence<T>::ListSequence(LinkedList <T> &list) {
+ListSequence<T>::ListSequence(LinkedList<T> &list) {
     list_ = new LinkedList<T>(list);
 }
 
 template<typename T>
 T &ListSequence<T>::GetFirst() {
-    auto it = list_->begin();
-    return *it;
+    return Get(0);
 }
 
 template<typename T>
 T &ListSequence<T>::GetLast() {
-    auto it = list_->end();
-    return *(--it);
+    return Get(this->GetLength() - 1);
 }
 
 template<typename T>
@@ -35,7 +33,7 @@ T &ListSequence<T>::Get(int index) {
 }
 
 template<typename T>
-T &ListSequence<T>::Get(int index) const{
+T &ListSequence<T>::Get(int index) const {
     auto it = list_->get_nth(index);
     return *it;
 }
@@ -73,9 +71,10 @@ T &ListSequence<T>::operator[](int index) {
 
 template<class T>
 void ListSequence<T>::Resize(int length) {
-    if (length > this->GetLength()){
+    if (length > this->GetLength()) {
         for (int i = GetLength(); i < length; ++i) {
-            this->Append(0);
+            T data;
+            this->Append(data);
         }
     }
 }
@@ -103,4 +102,12 @@ Sequence<T> *ListSequence<T>::Concat(Sequence<T> *seq) const {
         new_arr[i + list_->GetLength()] = seq->Get(i);
     }
     return new ListSequence<T>(new_arr, seq->GetLength() + this->GetLength());
+}
+
+template<class T>
+void ListSequence<T>::Remove(int index) {
+    if (index >= list_->GetLength() || index < 0)
+        throw std::out_of_range("index is more then length or negative");
+    auto it = list_->get_nth(index);
+    list_->remove_it(it);
 }
