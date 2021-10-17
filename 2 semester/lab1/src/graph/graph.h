@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../matrix/squareMatrix.h"
-#include <SFML/Graphics.hpp>
+//#include <SFML/Graphics.hpp>
 #include <cmath>
 #include <utility>
 #include <iostream>

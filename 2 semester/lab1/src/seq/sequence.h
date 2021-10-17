@@ -1,3 +1,4 @@
+#include <iostream>
 #pragma once
 
 template<typename T>
@@ -19,5 +20,4 @@ public:
     virtual void Remove(int index) = 0;
     virtual Sequence<T> *Concat(Sequence<T> *Sequence) const = 0;
     virtual Sequence<T> *GetSubSequence(int start_index, int end_index) const = 0;
-
 };

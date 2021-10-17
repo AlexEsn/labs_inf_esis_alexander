@@ -10,7 +10,7 @@ set(SOURCES
         matrix/squareMatrix.h
         matrix/triangularMatrix.h
         matrix/diagonalMatrix.h
-        graph/graph.h graph/graph.cpp
+#        graph/graph.h graph/graph.cpp
         queue/queue.h
         )
 

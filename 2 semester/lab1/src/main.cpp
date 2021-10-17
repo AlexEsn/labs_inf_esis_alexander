@@ -1,90 +1,80 @@
-#include <SFML/Graphics.hpp>
-#include "graph/graph.h"
+#include "seq/sequence.h"
+#include "arr/arraysequence.h"
+#include "list/listsequence.h"
+#include <random>
 
-#define WIDTH 900.f
-#define HEIGHT 700.f
+template<typename T>
+void swap(T &first, T &second) {
+    T temp = first;
+    first = second;
+    second = temp;
+}
 
-using namespace sf;
-using namespace std;
+template<typename T>
+void BubbleSort(Sequence<T> &base, bool (&comp)(T &left, T &right)) {
+    for (int i = 0; i < base.GetLength(); ++i) {
+        for (int j = 0; j < base.GetLength() - 1; ++j) {
+            if (comp(base[j], base[j + 1])) swap(base[j], base[j + 1]);
+        }
+    }
+}
 
+template<typename T>
+void ShakerSort(Sequence<T> &base, bool (&comp)(T &left, T &right)) {
+    int left = 0, right = base.GetLength() - 1, control, numOfIter = 0;
+    while (left < right) {
+        for (int i = left; i < right; ++i, numOfIter++)
+            if (comp(base[i], base[i + 1])){
+                swap(base[i], base[i + 1]);
+                control = i;
+            }
+        right = control;
+        for (int i = right; i > left; --i, numOfIter++)
+            if (!comp(base[i], base[i - 1])){
+                swap(base[i], base[i - 1]);
+                control = i;
+            }
+        left = control;
+    }
+    std::cout << numOfIter << std::endl;
+}
+
+template<typename T>
+void InsertionSort(Sequence<T> &base, bool (&comp)(T &left, T &right)){
+    for (int i = 1; i < base.GetLength(); ++i) {
+        for (int j = i - 1; j >= 0; --j) {
+            std::cout << *(dynamic_cast<ListSequence<int>*>(&base)) << std::endl;
+            if(comp(base[i], base[j])){
+                T temp = base[i];
+                for (int k = i; k >= j ; --k) {
+                    swap(base[k], base[k - 1]);
+                }
+                base[j] = temp;
+            }
+        }
+    }
+
+}
+
+
+
+
+bool comp(int &left, int &right) {
+    return left < right;
+}
 
 int main() {
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    int menu, display_mode;
-    cout << "Graph calculator" << endl;
-    cout << "Select an action:" << endl;
-    cout << "1. Union of graphs" << endl;
-    cout << "2. Intersection of graphs" << endl;
-
-    cin >> menu;
-
-    cout << "Select the display mode: (display in rectangles is poorly optimized,"
-            "it is recommended to use circles"
-         << endl;
-    cout << "1. In circles" << endl;
-    cout << "2. In rectangles" << endl;
-
-
-    cin >> display_mode;
-
-    SquareMatrix<bool> matrix;
-    Graph graph1(WIDTH, HEIGHT);
-    Graph graph2(WIDTH, HEIGHT);
-    Graph graph3(matrix, WIDTH, HEIGHT);
-
-
-    switch (menu) {
-        case 1:
-            graph3.Union(graph1, graph2);
-            break;
-        case 2:
-            graph3.Intersection(graph1, graph2);
-            break;
-        default:
-            return -1;
+    Sequence<int> *arr = new ListSequence<int>;
+    srand(time(nullptr));
+    for (int i = 0; i < 5; ++i) {
+        arr->Append(random() % 100);
     }
+    std::cout << *(dynamic_cast<ListSequence<int>*>(arr)) << std::endl;
 
+    InsertionSort(*arr, comp);
 
-    ContextSettings settings;
-    settings.antialiasingLevel = 8;
-
-    RenderWindow window(VideoMode(WIDTH, HEIGHT), "SFML", Style::Default, settings);
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    while (window.isOpen()) {
-
-        Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == Event::Closed)
-                window.close();
-        }
-        window.clear(sf::Color::Black);
-
-        switch (display_mode) {
-            case 1: {
-                graph1.drawInCircle(window, 1);
-                graph2.drawInCircle(window, 2);
-                graph3.drawInCircle(window, 3);
-            }
-                break;
-            case 2: {
-                graph1.drawInRectangle(window, 1);
-                graph2.drawInRectangle(window, 2);
-                graph3.drawInRectangle(window, 3);
-            }
-                break;;
-            default:
-                return -1;
-
-        }
-
-        window.display();
-    }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+    std::cout << *(dynamic_cast<ListSequence<int>*>(arr)) << std::endl;
 
     return 0;
 }

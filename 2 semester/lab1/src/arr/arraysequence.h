@@ -2,6 +2,8 @@
 
 #include "../seq/sequence.h"
 #include "dynamicarray.h"
+#include <iostream>
+#include <ostream>
 
 template<class T>
 class ArraySequence : public Sequence<T> {
@@ -34,8 +36,13 @@ public:
     Sequence<T>* GetSubSequence(int start_index, int end_index) const override;
     Sequence<T>* Concat(Sequence <T> *seq) const override;
 
+    //Overloaded operators
+    template<typename U>
+    friend std::ostream& operator<<(std::ostream& out, const ArraySequence<U>& seq);
+
     //Destructor
     ~ArraySequence();
 };
+
 
 #include "arraysequence.tpp"

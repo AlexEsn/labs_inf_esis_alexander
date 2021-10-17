@@ -97,3 +97,9 @@ void ArraySequence<T>::Remove(int index) {
     array_->Delete(index);
 }
 
+template<typename T>
+std::ostream &operator<<(std::ostream &out, const ArraySequence<T>& seq){
+    for (int i = 0; i < seq.GetLength(); ++i)
+        out << seq.array_->Get(i) << ' ';
+    return out;
+}
