@@ -4,8 +4,7 @@ set(SOURCES
         tst_arr/test_arraysequence.cpp
         tst_list/test_linkedlist.cpp
         tst_list/test_listsequence.cpp
-        tst_vector/test_vector.cpp
-        tst_matrix/test_matrix.cpp)
+        tst_sort/test_sort.cpp)
 
 #############################################################################
 enable_testing()

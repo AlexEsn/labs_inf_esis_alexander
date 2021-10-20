@@ -4,14 +4,10 @@ set(SOURCES
         arr/dynamicarray.h
         list/linkedlist.h
         list/listsequence.h
-        vector/vector.h
         seq/sequence.h
-        matrix/matrix.h
-        matrix/squareMatrix.h
-        matrix/triangularMatrix.h
-        matrix/diagonalMatrix.h
-#        graph/graph.h graph/graph.cpp
         queue/queue.h
+        sort/sort.h
+        sort/ISorter.h
         )
 
 #############################################################################

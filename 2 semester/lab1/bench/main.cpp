@@ -1,117 +1,273 @@
 #include "benchmark/benchmark.h"
-#include "arr/arraysequence.h"
-#include "list/listsequence.h"
+#include "sort/sort.h"
 #include <vector>
-#include <list>
-#include <iostream>
+#include <algorithm>
 
-static void BM_ArraySequence_Accessing(benchmark::State& state) {
-    ArraySequence<int> arr(1000);
-    for (auto _ : state){
-        arr.Get(state.range(0)) = 0;
-    }
-    state.SetComplexityN(state.range(0));
-}
-static void BM_ListSequence_Accessing(benchmark::State& state) {
-    for (auto _ : state){
-        ListSequence<int> list;
-        list.Get(1000) = 0;
-    }
-    state.SetComplexityN(state.range(0));
+#define MIN 2                       //initial power of two
+#define MAX 16                      //final power of two
+
+#define NO_RANDOM 1
+#define NO_REVERSE 1
+#define SEQ 1                       //0 for Arr and 1 for List
+
+bool comp(int &left, int &right) {
+    return left < right;
 }
 
-static void BM_STL_Vector_Accessing(benchmark::State& state) {
-    std::vector<int> vector(1000);
-    for (auto _ : state){
-        vector[state.range(0)] = 0;
+static void BM_BubbleSort(benchmark::State &state) {
+
+    for (auto _: state) {
+
+        state.PauseTiming();
+
+        srand(time(nullptr));
+
+#if SEQ == 0
+        Sequence<int> *arr = new ArraySequence<int>;
+#else
+        Sequence<int> *arr = new ListSequence<int>;
+#endif
+
+#if RANDOM
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(rand());
+#else
+#if REVERSE
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(i);
+
+#else
+        for (int i = state.range() - 1; i >= 0; i--)
+            arr->Append(i);
+#endif
+#endif
+
+
+        state.ResumeTiming();
+
+        BubbleSort(*arr, comp);
     }
-    state.SetComplexityN(state.range(0));
-}
-static void BM_STL_List_Accessing(benchmark::State& state) {
-    for (auto _ : state){
-        std::list<int> list;
-        auto i = list.begin();
-        std::advance(i, 1000);
-        list.insert(i, 0);
-    }
-    state.SetComplexityN(state.range(0));
+//    state.SetComplexityN(state.range(0));
 }
 
-BENCHMARK(BM_ArraySequence_Accessing)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
-BENCHMARK(BM_ListSequence_Accessing)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
-BENCHMARK(BM_STL_Vector_Accessing)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
-BENCHMARK(BM_STL_List_Accessing)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
+BENCHMARK(BM_BubbleSort)->Range(1 << MIN, 1 << MAX);
 
-static void BM_ArraySequence_Append(benchmark::State& state) {
-    ArraySequence<int> arr;
-    for (auto _ : state){
-        arr.Append(0);
-    }
-    state.SetComplexityN(state.range(0));
+static void BM_ShakerSort(benchmark::State &state) {
 
-}
-static void BM_ListSequence_Append(benchmark::State& state) {
-    ListSequence<int> list;
-    for (auto _ : state){
-        list.Append(0);
-    }
-    state.SetComplexityN(state.range(0));
-}
+    for (auto _: state) {
 
-static void BM_STL_Vector_Append(benchmark::State& state) {
-    std::vector<int> vector;
-    for (auto _ : state){
-        vector.push_back(0);
-    }
-    state.SetComplexityN(state.range(0));
+        state.PauseTiming();
 
-}
-static void BM_STL_List_Append(benchmark::State& state) {
-    std::list<int> list;
-    for (auto _ : state){
-        list.push_back(0);
-    }
-    state.SetComplexityN(state.range(0));
-}
+        srand(time(nullptr));
 
-BENCHMARK(BM_ArraySequence_Append)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
-BENCHMARK(BM_ListSequence_Append)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
-BENCHMARK(BM_STL_Vector_Append)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
-BENCHMARK(BM_STL_List_Append)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
+#if SEQ == 0
+        Sequence<int> *arr = new ArraySequence<int>;
+#else
+        Sequence<int> *arr = new ListSequence<int>;
+#endif
 
-static void BM_ArraySequence_Prepend(benchmark::State& state) {
-    ArraySequence<int> arr;
-    for (auto _ : state){
-        arr.Prepend(0);
+#if RANDOM
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(rand());
+#else
+#if REVERSE
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(i);
+
+#else
+        for (int i = state.range() - 1; i >= 0; i--)
+            arr->Append(i);
+#endif
+#endif
+
+        state.ResumeTiming();
+
+        ShakerSort(*arr, comp);
     }
-    state.SetComplexityN(state.range(0));
-}
-static void BM_ListSequence_Prepend(benchmark::State& state) {
-    ListSequence<int> list;
-    for (auto _ : state){
-        list.Prepend(0);
-    }
-    state.SetComplexityN(state.range(0));
+//    state.SetComplexityN(state.range(0));
 }
 
-static void BM_STL_Vector_Prepend(benchmark::State& state) {
-    std::vector<int> vector;
-    for (auto _ : state){
-        vector.insert(vector.begin(), 0);
+BENCHMARK(BM_ShakerSort)->Range(1 << MIN, 1 << MAX);
+
+static void BM_InsertionSort(benchmark::State &state) {
+
+    for (auto _: state) {
+
+        state.PauseTiming();
+
+        srand(time(nullptr));
+
+#if SEQ == 0
+        Sequence<int> *arr = new ArraySequence<int>;
+#else
+        Sequence<int> *arr = new ListSequence<int>;
+#endif
+
+#if RANDOM
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(rand());
+#else
+#if REVERSE
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(i);
+
+#else
+        for (int i = state.range() - 1; i >= 0; i--)
+            arr->Append(i);
+#endif
+#endif
+
+        state.ResumeTiming();
+
+        InsertionSort(*arr, comp);
     }
-    state.SetComplexityN(state.range(0));
-}
-static void BM_STL_List_Prepend(benchmark::State& state) {
-    std::list<int> list;
-    for (auto _ : state){
-        list.push_front(0);
-    }
-    state.SetComplexityN(state.range(0));
+//    state.SetComplexityN(state.range(0));
 }
 
-BENCHMARK(BM_ArraySequence_Prepend)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
-BENCHMARK(BM_ListSequence_Prepend)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
-BENCHMARK(BM_STL_Vector_Prepend)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
-BENCHMARK(BM_STL_List_Prepend)->RangeMultiplier(2)->Range(1<<10, 1<<18)->Complexity(benchmark::oN);
+BENCHMARK(BM_InsertionSort)->Range(1 << MIN, 1 << MAX);
+
+static void BM_SelectionSort(benchmark::State &state) {
+
+    for (auto _: state) {
+
+        state.PauseTiming();
+
+        srand(time(nullptr));
+
+#if SEQ == 0
+        Sequence<int> *arr = new ArraySequence<int>;
+#else
+        Sequence<int> *arr = new ListSequence<int>;
+#endif
+
+#if RANDOM
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(rand());
+#else
+#if REVERSE
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(i);
+
+#else
+        for (int i = state.range() - 1; i >= 0; i--)
+            arr->Append(i);
+#endif
+#endif
+
+        state.ResumeTiming();
+
+        SelectionSort(*arr, comp);
+    }
+//    state.SetComplexityN(state.range(0));
+}
+
+BENCHMARK(BM_SelectionSort)->Range(1 << MIN, 1 << MAX);
+
+static void BM_QuickSort(benchmark::State &state) {
+
+    for (auto _: state) {
+
+        state.PauseTiming();
+
+        srand(time(nullptr));
+
+#if SEQ == 0
+        Sequence<int> *arr = new ArraySequence<int>;
+#else
+        Sequence<int> *arr = new ListSequence<int>;
+#endif
+
+#if RANDOM
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(rand());
+#else
+#if REVERSE
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(i);
+
+#else
+        for (int i = state.range() - 1; i >= 0; i--)
+            arr->Append(i);
+#endif
+#endif
+
+        state.ResumeTiming();
+
+        QuickSort(*arr, comp, 0, arr->GetLength() - 1);
+    }
+//    state.SetComplexityN(state.range(0));
+}
+
+BENCHMARK(BM_QuickSort)->Range(1 << MIN, 1 << MAX);
+
+static void BM_MergeSort(benchmark::State &state) {
+
+    for (auto _: state) {
+
+        state.PauseTiming();
+
+        srand(time(nullptr));
+
+#if SEQ == 0
+        Sequence<int> *arr = new ArraySequence<int>;
+#else
+        Sequence<int> *arr = new ListSequence<int>;
+#endif
+
+#if RANDOM
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(rand());
+#else
+#if REVERSE
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(i);
+
+#else
+        for (int i = state.range() - 1; i >= 0; i--)
+            arr->Append(i);
+#endif
+#endif
+
+        state.ResumeTiming();
+
+        MergeSort(*arr, comp, 0, arr->GetLength() - 1);
+    }
+//    state.SetComplexityN(state.range(0));
+}
+
+BENCHMARK(BM_MergeSort)->Range(1 << MIN, 1 << MAX);
+
+static void BM_QuickSort_STL(benchmark::State &state) {
+
+    for (auto _: state) {
+
+        state.PauseTiming();
+
+        srand(time(nullptr));
+
+        std::vector<int> arr;
+
+#if RANDOM
+        for (int i = 0; i < state.range(); i++)
+            arr.push_back(rand());
+#else
+#if REVERSE
+        for (int i = 0; i < state.range(); i++)
+            arr.push_back(i);
+
+#else
+        for (int i = state.range() - 1; i >= 0; i--)
+            arr.push_back(i);
+#endif
+#endif
+
+        state.ResumeTiming();
+
+        std::sort(arr.begin(), arr.end());
+    }
+//    state.SetComplexityN(state.range(0));
+}
+
+BENCHMARK(BM_QuickSort_STL)->Range(1 << MIN, 1 << MAX);
 
 BENCHMARK_MAIN();
