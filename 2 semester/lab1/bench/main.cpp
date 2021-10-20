@@ -6,8 +6,8 @@
 #define MIN 2                       //initial power of two
 #define MAX 16                      //final power of two
 
-#define NO_RANDOM 1
-#define NO_REVERSE 1
+#define RANDOM 1
+#define REVERSE 1
 #define SEQ 1                       //0 for Arr and 1 for List
 
 bool comp(int &left, int &right) {
