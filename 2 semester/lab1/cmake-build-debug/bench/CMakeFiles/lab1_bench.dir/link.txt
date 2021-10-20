@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/lab1_bench.dir/main.cpp.o -o lab1_bench  ../lib/benchmark/src/libbenchmark.a -pthread /usr/lib/x86_64-linux-gnu/librt.so 

@@ -1,0 +1,84 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/arraysequence.h
+../seq/sequence.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/seq/sequence.h
+dynamicarray.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/dynamicarray.h
+iostream
+-
+ostream
+-
+arraysequence.tpp
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/arraysequence.tpp
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/arraysequence.tpp
+arraysequence.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/arraysequence.h
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/dynamicarray.h
+stdexcept
+-
+cstring
+-
+dynamicarray.tpp
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/dynamicarray.tpp
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/dynamicarray.tpp
+dynamicarray.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/dynamicarray.h
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/list/linkedlist.h
+stdexcept
+-
+linkedlist.tpp
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/list/linkedlist.tpp
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/list/linkedlist.tpp
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/list/listsequence.h
+../seq/sequence.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/seq/sequence.h
+linkedlist.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/list/linkedlist.h
+listsequence.tpp
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/list/listsequence.tpp
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/list/listsequence.tpp
+listsequence.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/list/listsequence.h
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/main.cpp
+sort/sort.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/sort/sort.h
+SFML/Graphics.hpp
+-
+iostream
+-
+cmath
+-
+algorithm
+-
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/seq/sequence.h
+iostream
+-
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/sort/sort.h
+iostream
+-
+../arr/arraysequence.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/arr/arraysequence.h
+../list/listsequence.h
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/list/listsequence.h
+sort.tpp
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/sort/sort.tpp
+
+/home/alexesn/labs_inf_esis_alexander/2 semester/lab1/src/sort/sort.tpp
+

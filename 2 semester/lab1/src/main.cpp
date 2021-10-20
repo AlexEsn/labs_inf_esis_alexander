@@ -110,7 +110,6 @@ int main() {
 
     switch (sort_type) {
         case 1: {
-
             Thread sorting(&Quick);
             sorting.launch();
         }
