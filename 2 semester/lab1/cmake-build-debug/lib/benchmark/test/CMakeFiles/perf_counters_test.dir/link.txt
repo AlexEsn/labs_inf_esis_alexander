@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++11  -Wall  -Wextra  -Wshadow  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing -g CMakeFiles/perf_counters_test.dir/perf_counters_test.cc.o -o perf_counters_test  liboutput_test_helper.a ../src/libbenchmark.a -pthread /usr/lib/x86_64-linux-gnu/librt.so 
