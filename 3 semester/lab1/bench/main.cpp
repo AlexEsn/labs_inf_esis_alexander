@@ -4,11 +4,11 @@
 #include <algorithm>
 
 #define MIN 2                       //initial power of two
-#define MAX 10                      //final power of two
+#define MAX 16                      //final power of two
 
-#define RANDOM 0
-#define REVERSE 1
-#define SEQ 1                       //0 for Arr and 1 for List
+#define RANDOM 1
+#define REVERSE 0
+#define SEQ 0                       //0 for Arr and 1 for List
 
 bool comp(int &left, int &right) {
     return left < right;
