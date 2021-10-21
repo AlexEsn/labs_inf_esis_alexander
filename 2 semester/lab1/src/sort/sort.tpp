@@ -16,53 +16,64 @@ void BubbleSort(Sequence<T> &base, bool (&comp)(T &left, T &right)) {
 
 template<typename T>
 void ShakerSort(Sequence<T> &base, bool (&comp)(T &left, T &right)) {
-    int left = 1, right = base.GetLength() - 1;
-    while (left < right) {
-        for (int i = right; i >= left; i--)
-            if (comp(base[i], base[i - 1])) swap(base[i], base[i - 1]);
-        left++;
+    int left = 0, right = base.GetLength() - 1;
+    bool is_no_sorted = true;
+    while (is_no_sorted) {
 
+        is_no_sorted = false;
 
-        for (int i = left; i <= right; i++)
-            if (comp(base[i], base[i - 1])) swap(base[i], base[i - 1]);
-        right--;
+        for (int i = left; i < right; ++i) {
+            if (comp(base[i + 1], base[i])) {
+                swap(base[i], base[i + 1]);
+                is_no_sorted = true;
+            }
+        }
+        if (!is_no_sorted)
+            break;
+
+        is_no_sorted = false;
+
+        --right;
+
+        for (int i = right - 1; i >= left; --i) {
+            if (comp(base[i + 1], base[i])) {
+                swap(base[i], base[i + 1]);
+                is_no_sorted = true;
+            }
+        }
+        ++left;
     }
 }
 
 template<typename T>
 void InsertionSort(Sequence<T> &base, bool (&comp)(T &left, T &right)) {
-    for (int i = 1; i < base.GetLength(); ++i) {
-        for (int j = i - 1; j >= 0; --j) {
-            if (comp(base[i], base[j]) && (j == 0 || comp(base[j - 1], base[i]))) {
-                T temp = base[i];
-                for (int k = i; k > j; --k) {
-                    swap(base[k], base[k - 1]);
-                }
-                base[j] = temp;
-            }
+    for (int i = 1, j; i < base.GetLength(); i++) {
+        T key = base[i];
+        j = i - 1;
+        while (j >= 0 && comp(key, base[j])) {
+            base[j + 1] = base[j];
+            j = j - 1;
         }
+        base[j + 1] = key;
     }
 }
 
 template<typename T>
 void SelectionSort(Sequence<T> &base, bool (&comp)(T &left, T &right)) {
     for (int i = 0; i < base.GetLength(); ++i) {
-        T min = base[i];
-        size_t min_index = i;
+        size_t min = i;
         for (int j = i; j < base.GetLength(); ++j) {
-            if (comp(base[j], min)) {
-                min = base[j];
-                min_index = j;
-            }
+            if (comp(base[j], base[min]))
+                min = j;
         }
-        swap(base[i], base[min_index]);
+        swap(base[i], base[min]);
     }
 
 }
 
 template<typename T>
 void QuickSort(Sequence<T> &base, bool (&comp)(T &left, T &right), int left, int right) {
-    if(right <= 0)
+    if (right <= 0)
         return;
     int l_hold = left;
     int r_hold = right;
@@ -94,7 +105,7 @@ void QuickSort(Sequence<T> &base, bool (&comp)(T &left, T &right), int left, int
 
 template<typename T>
 void MergeSort(Sequence<T> &base, bool (&comp)(T &left, T &right), int left, int right) {
-    if(right <= 0)
+    if (right <= 0)
         return;
     if (left == right) return;
     int median = (left + right) / 2;

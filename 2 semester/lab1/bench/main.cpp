@@ -4,9 +4,9 @@
 #include <algorithm>
 
 #define MIN 2                       //initial power of two
-#define MAX 16                      //final power of two
+#define MAX 10                      //final power of two
 
-#define RANDOM 1
+#define RANDOM 0
 #define REVERSE 1
 #define SEQ 1                       //0 for Arr and 1 for List
 
@@ -33,11 +33,12 @@ static void BM_BubbleSort(benchmark::State &state) {
             arr->Append(rand());
 #else
 #if REVERSE
-        for (int i = 0; i < state.range(); i++)
+        for (int i = state.range() - 1; i >= 0; i--)
             arr->Append(i);
 
+
 #else
-        for (int i = state.range() - 1; i >= 0; i--)
+        for (int i = 0; i < state.range(); i++)
             arr->Append(i);
 #endif
 #endif
@@ -71,11 +72,12 @@ static void BM_ShakerSort(benchmark::State &state) {
             arr->Append(rand());
 #else
 #if REVERSE
-        for (int i = 0; i < state.range(); i++)
+        for (int i = state.range() - 1; i >= 0; i--)
             arr->Append(i);
 
+
 #else
-        for (int i = state.range() - 1; i >= 0; i--)
+        for (int i = 0; i < state.range(); i++)
             arr->Append(i);
 #endif
 #endif
@@ -108,14 +110,16 @@ static void BM_InsertionSort(benchmark::State &state) {
             arr->Append(rand());
 #else
 #if REVERSE
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(i);
-
-#else
         for (int i = state.range() - 1; i >= 0; i--)
             arr->Append(i);
+
+
+#else
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(i);
 #endif
 #endif
+
 
         state.ResumeTiming();
 
@@ -145,11 +149,12 @@ static void BM_SelectionSort(benchmark::State &state) {
             arr->Append(rand());
 #else
 #if REVERSE
-        for (int i = 0; i < state.range(); i++)
+        for (int i = state.range() - 1; i >= 0; i--)
             arr->Append(i);
 
+
 #else
-        for (int i = state.range() - 1; i >= 0; i--)
+        for (int i = 0; i < state.range(); i++)
             arr->Append(i);
 #endif
 #endif
@@ -182,14 +187,16 @@ static void BM_QuickSort(benchmark::State &state) {
             arr->Append(rand());
 #else
 #if REVERSE
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(i);
-
-#else
         for (int i = state.range() - 1; i >= 0; i--)
             arr->Append(i);
+
+
+#else
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(i);
 #endif
 #endif
+
 
         state.ResumeTiming();
 
@@ -219,14 +226,16 @@ static void BM_MergeSort(benchmark::State &state) {
             arr->Append(rand());
 #else
 #if REVERSE
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(i);
-
-#else
         for (int i = state.range() - 1; i >= 0; i--)
             arr->Append(i);
+
+
+#else
+        for (int i = 0; i < state.range(); i++)
+            arr->Append(i);
 #endif
 #endif
+
 
         state.ResumeTiming();
 
@@ -252,12 +261,13 @@ static void BM_QuickSort_STL(benchmark::State &state) {
             arr.push_back(rand());
 #else
 #if REVERSE
-        for (int i = 0; i < state.range(); i++)
+        for (int i = state.range() - 1; i >= 0; i--)
             arr.push_back(i);
 
 #else
-        for (int i = state.range() - 1; i >= 0; i--)
+        for (int i = 0; i < state.range(); i++)
             arr.push_back(i);
+
 #endif
 #endif
 
