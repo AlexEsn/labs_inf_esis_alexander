@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11  -Wall  -Wextra  -Wshadow  -pedantic  -pedantic-errors  -fstrict-aliasing  -Wno-deprecated-declarations  -Wstrict-aliasing -g CMakeFiles/benchmark_name_gtest.dir/benchmark_name_gtest.cc.o -o benchmark_name_gtest  ../src/libbenchmark.a ../../libgmock_maind.a -pthread /usr/lib/x86_64-linux-gnu/librt.so ../../libgmockd.a ../../libgtestd.a -pthread 

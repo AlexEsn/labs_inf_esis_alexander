@@ -1,0 +1,6 @@
+[submodule "lab3/bench/benchmark"]
+	path = lab3/bench/benchmark
+	url = https://github.com/google/benchmark
+[submodule "lab3/lib/googletest"]
+	path = lab3/lib/googletest
+	url = https://github.com/google/googletest.git
