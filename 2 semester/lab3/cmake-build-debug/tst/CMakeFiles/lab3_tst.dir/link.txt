@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/lab3_tst.dir/main.cpp.o -o lab3_tst  ../lib/libgtestd.a ../lib/libgtest_maind.a ../lib/libgtestd.a -pthread 
