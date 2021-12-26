@@ -1,283 +1,70 @@
 #include "benchmark/benchmark.h"
-#include "sort/sort.h"
-#include <vector>
-#include <algorithm>
+
+#include <boost/numeric/ublas/matrix_sparse.hpp>                   //boost
+
+namespace bst = boost::numeric::ublas;
+
+#include "tree/sparse_matrix_BTree.h"
 
 #define MIN 2                       //initial power of two
-#define MAX 16                      //final power of two
+#define MAX 30                      //final power of two
 
-#define RANDOM 1
-#define REVERSE 0
-#define SEQ 0                       //0 for Arr and 1 for List
 
-bool comp(int &left, int &right) {
-    return left < right;
-}
+static void BM_push_compressed_matrix(benchmark::State &state) {
 
-static void BM_BubbleSort(benchmark::State &state) {
+    compressed_matrix<int> matrix(100000000, 100000000);
 
+    int i = 0, j = 0;
     for (auto _: state) {
-
-        state.PauseTiming();
-
-        srand(time(nullptr));
-
-#if SEQ == 0
-        Sequence<int> *arr = new ArraySequence<int>;
-#else
-        Sequence<int> *arr = new ListSequence<int>;
-#endif
-
-#if RANDOM
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(rand());
-#else
-#if REVERSE
-        for (int i = state.range() - 1; i >= 0; i--)
-            arr->Append(i);
-
-
-#else
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(i);
-#endif
-#endif
-
-
-        state.ResumeTiming();
-
-        BubbleSort(*arr, comp);
+        matrix.push_back(i, j, 1);
+        i++;
+        j++;
     }
-//    state.SetComplexityN(state.range(0));
 }
 
-BENCHMARK(BM_BubbleSort)->Range(1 << MIN, 1 << MAX);
+BENCHMARK(BM_push_compressed_matrix)->Range(1 << MIN, 1 << MAX);
 
-static void BM_ShakerSort(benchmark::State &state) {
+static void BM_push_compressed_matrix_boost(benchmark::State &state) {
 
+    bst::compressed_matrix<int> matrix(100000000, 100000000);
+
+    int i = 0, j = 0;
     for (auto _: state) {
-
-        state.PauseTiming();
-
-        srand(time(nullptr));
-
-#if SEQ == 0
-        Sequence<int> *arr = new ArraySequence<int>;
-#else
-        Sequence<int> *arr = new ListSequence<int>;
-#endif
-
-#if RANDOM
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(rand());
-#else
-#if REVERSE
-        for (int i = state.range() - 1; i >= 0; i--)
-            arr->Append(i);
-
-
-#else
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(i);
-#endif
-#endif
-
-        state.ResumeTiming();
-
-        ShakerSort(*arr, comp);
+        matrix.push_back(i, j, 1);
+        i++;
+        j++;
     }
-//    state.SetComplexityN(state.range(0));
 }
 
-BENCHMARK(BM_ShakerSort)->Range(1 << MIN, 1 << MAX);
+BENCHMARK(BM_push_compressed_matrix_boost)->Range(1 << MIN, 1 << MAX);
 
-static void BM_InsertionSort(benchmark::State &state) {
-
-    for (auto _: state) {
-
-        state.PauseTiming();
-
-        srand(time(nullptr));
-
-#if SEQ == 0
-        Sequence<int> *arr = new ArraySequence<int>;
-#else
-        Sequence<int> *arr = new ListSequence<int>;
-#endif
-
-#if RANDOM
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(rand());
-#else
-#if REVERSE
-        for (int i = state.range() - 1; i >= 0; i--)
-            arr->Append(i);
-
-
-#else
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(i);
-#endif
-#endif
-
-
-        state.ResumeTiming();
-
-        InsertionSort(*arr, comp);
-    }
-//    state.SetComplexityN(state.range(0));
-}
-
-BENCHMARK(BM_InsertionSort)->Range(1 << MIN, 1 << MAX);
-
-static void BM_SelectionSort(benchmark::State &state) {
-
-    for (auto _: state) {
-
-        state.PauseTiming();
-
-        srand(time(nullptr));
-
-#if SEQ == 0
-        Sequence<int> *arr = new ArraySequence<int>;
-#else
-        Sequence<int> *arr = new ListSequence<int>;
-#endif
-
-#if RANDOM
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(rand());
-#else
-#if REVERSE
-        for (int i = state.range() - 1; i >= 0; i--)
-            arr->Append(i);
-
-
-#else
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(i);
-#endif
-#endif
-
-        state.ResumeTiming();
-
-        SelectionSort(*arr, comp);
-    }
-//    state.SetComplexityN(state.range(0));
-}
-
-BENCHMARK(BM_SelectionSort)->Range(1 << MIN, 1 << MAX);
-
-static void BM_QuickSort(benchmark::State &state) {
-
-    for (auto _: state) {
-
-        state.PauseTiming();
-
-        srand(time(nullptr));
-
-#if SEQ == 0
-        Sequence<int> *arr = new ArraySequence<int>;
-#else
-        Sequence<int> *arr = new ListSequence<int>;
-#endif
-
-#if RANDOM
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(rand());
-#else
-#if REVERSE
-        for (int i = state.range() - 1; i >= 0; i--)
-            arr->Append(i);
-
-
-#else
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(i);
-#endif
-#endif
-
-
-        state.ResumeTiming();
-
-        QuickSort(*arr, comp, 0, arr->GetLength() - 1);
-    }
-//    state.SetComplexityN(state.range(0));
-}
-
-BENCHMARK(BM_QuickSort)->Range(1 << MIN, 1 << MAX);
-
-static void BM_MergeSort(benchmark::State &state) {
-
-    for (auto _: state) {
-
-        state.PauseTiming();
-
-        srand(time(nullptr));
-
-#if SEQ == 0
-        Sequence<int> *arr = new ArraySequence<int>;
-#else
-        Sequence<int> *arr = new ListSequence<int>;
-#endif
-
-#if RANDOM
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(rand());
-#else
-#if REVERSE
-        for (int i = state.range() - 1; i >= 0; i--)
-            arr->Append(i);
-
-
-#else
-        for (int i = 0; i < state.range(); i++)
-            arr->Append(i);
-#endif
-#endif
-
-
-        state.ResumeTiming();
-
-        MergeSort(*arr, comp, 0, arr->GetLength() - 1);
-    }
-//    state.SetComplexityN(state.range(0));
-}
-
-BENCHMARK(BM_MergeSort)->Range(1 << MIN, 1 << MAX);
-
-static void BM_QuickSort_STL(benchmark::State &state) {
-
-    for (auto _: state) {
-
-        state.PauseTiming();
-
-        srand(time(nullptr));
-
-        std::vector<int> arr;
-
-#if RANDOM
-        for (int i = 0; i < state.range(); i++)
-            arr.push_back(rand());
-#else
-#if REVERSE
-        for (int i = state.range() - 1; i >= 0; i--)
-            arr.push_back(i);
-
-#else
-        for (int i = 0; i < state.range(); i++)
-            arr.push_back(i);
-
-#endif
-#endif
-
-        state.ResumeTiming();
-
-        std::sort(arr.begin(), arr.end());
-    }
-//    state.SetComplexityN(state.range(0));
-}
-
-BENCHMARK(BM_QuickSort_STL)->Range(1 << MIN, 1 << MAX);
+//static void BM_get_compressed_matrix(benchmark::State &state) {
+//
+//    compressed_matrix<int> matrix(100000000, 100000000);
+//
+//    int i = 0, j = 0;
+//    for (auto _: state) {
+//        matrix.push_back(i, j, 1);
+//        matrix(i, j) = 2;
+//        i++;
+//        j++;
+//    }
+//}
+//
+//BENCHMARK(BM_get_compressed_matrix)->Range(1 << MIN, 1 << MAX);
+//
+//static void BM_get_compressed_matrix_boost(benchmark::State &state) {
+//
+//    bst::compressed_matrix<int> matrix(100000000, 100000000);
+//    int i = 0, j = 0;
+//    for (auto _: state) {
+//        matrix.push_back(i, j, 1);
+//        matrix(i, j) = 2;
+//        i++;
+//        j++;
+//    }
+//}
+//
+//BENCHMARK(BM_get_compressed_matrix_boost)->Range(1 << MIN, 1 << MAX);
 
 BENCHMARK_MAIN();

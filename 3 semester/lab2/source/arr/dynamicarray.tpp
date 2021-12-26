@@ -106,8 +106,8 @@ void DynamicArray<T>::Resize(int length) {
         memcpy(new_data, data_, length * sizeof(T));
 
     length_ = length;
-    if (data_ != nullptr)
-        delete[] data_;
+//    if (data_ != nullptr)
+//        delete[] data_;
     data_ = new_data;
 }
 

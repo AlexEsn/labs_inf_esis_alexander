@@ -1,52 +1,71 @@
-#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/imgproc/imgproc.hpp"                              //OpenCV
 #include "opencv2/highgui/highgui.hpp"
 #include <opencv2/core/core.hpp>
 
 using namespace cv;
 
-#include <boost/numeric/ublas/matrix_sparse.hpp>
-#include <boost/numeric/ublas/io.hpp>
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace bst = boost::numeric::ublas;
-
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>                                       //SFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLSFMLS
 
 using namespace sf;
 
-#include <iostream>
-#include <queue>
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "tree/TreeNodeVector.h"                                  //for decision tree
+
+#ifdef DEBUG
+
+#include "queue/queue.h"
+#include "vector/vector.h"
+#include "tree/sparse_matrix_BTree.h"
+
+#else
+#include <queue>                                                   //stl
 #include <vector>
 
 using namespace std;
 
-#include "tree/tree.h"
+#include <boost/numeric/ublas/matrix_sparse.hpp>                   //boost
+
+namespace bst = boost::numeric::ublas;
+#endif
 
 #define TRUSTED_INTERVAL  5
 
-double coefficient_threshold[] = {0.95, 0.9, 0.87, 0.94, 0.9, 0.95, 0.94, 0.95, 0.919, 0.925, 0.95, 0.94};
+double coefficient_threshold[] = {0.95, 0.9, 0.87, 0.94, 0.9, 0.95, 0.94, 0.95, 0.919, 0.925, 0.95, 0.94};  //coefficients for different colors
 
 int main(int argc, char *argv[]) {
 
     Mat src_img, source_copy_img, result_img, templ_img;
 
+#ifdef DEBUG
+    int example_img = 1;
+    int num_color_templ = 11;
+    bool display_search = false;
+    std::string img_path = "../../example/", templ_path = "../../template/";
+#else
     if (argc < 4) {
-        cout << "Not enough parameters" << endl;
-        cout << "Usage:\n" << argv[0]
+        std::cout << "Not enough parameters" << std::endl;
+        std::cout << "Usage:\n" << argv[0]
              << " <image_name_folder> <template_name_folder> <num_img> <num_of_template> <display_search (default: 0)>"
-             << endl;
+             << std::endl;
         return -1;
     }
     int example_img = stoi(argv[3]);
     int num_color_templ = stoi(argv[4]);
     bool display_search = false;
     if(argc == 6) display_search = stoi(argv[5]);
+    std::string img_path = argv[1], templ_path = argv[2];
+#endif
 
+    vector<unsigned> figure_number;
     vector<vector<std::pair<double, double>>> figure(num_color_templ);
-    vector<bst::compressed_matrix<bool>> figure_compressed;
+    vector<compressed_matrix<bool>> figure_compressed;
 
-    for (size_t j = 0; j < num_color_templ; ++j) {
-        src_img = imread(argv[1] + std::to_string(example_img) + ".jpg");
-        templ_img = imread(argv[2] + std::to_string(j) + ".jpg");
+    for (int j = 0; j < num_color_templ; ++j) {
+        src_img = imread(img_path + std::to_string(example_img) + ".jpg");
+        templ_img = imread(templ_path + std::to_string(j) + ".jpg");
 
         src_img.copyTo(source_copy_img);
         matchTemplate(source_copy_img, templ_img, result_img, TM_CCOEFF_NORMED);
@@ -94,8 +113,10 @@ int main(int argc, char *argv[]) {
         if (figure[i].empty() || (example_img % 2 != 0 && i == 6) || (example_img % 2 == 0 && i == 10)) continue;
         figure_num++;
 
+        figure_number.push_back(i);
+
         double up_position = src_img.rows;
-        for (size_t j = 0; j < figure[i].size(); j++)
+        for (int j = 0; j < figure[i].size(); j++)
             if (figure[i][j].second < up_position)
                 up_position = figure[i][j].second;
 
@@ -112,11 +133,11 @@ int main(int argc, char *argv[]) {
         figure_matrix[round(abs((figure[i][0].second - up_position) / templ_img.rows))][0] = true;
 
 #ifdef DEBUG
-        cout << abs((up_position - figure[i][0].second) / templ_img.rows) << endl;
-        cout << templ_img.cols << " " << templ_img.rows << endl;
+        std::cout << abs((up_position - figure[i][0].second) / templ_img.rows) << std::endl;
+        std::cout << templ_img.cols << " " << templ_img.rows << std::endl;
 #endif
 
-        std::queue<std::pair<std::pair<double, double>, std::pair<int, int>>> figure_element;
+        queue<std::pair<std::pair<double, double>, std::pair<int, int>>> figure_element;
         figure_element.push(std::make_pair(figure[i][0],
                                            std::make_pair(
                                                    round(abs((figure[i][0].second - up_position) / templ_img.rows)),
@@ -129,7 +150,7 @@ int main(int argc, char *argv[]) {
             int m_i = temp.second.first;
             int m_j = temp.second.second;
             figure_element.pop();
-            for (size_t k = 0; k < figure[i].size(); k++) {
+            for (int k = 0; k < figure[i].size(); k++) {
                 bool isUsing = false;
                 if (figure[i][k].first - x - TRUSTED_INTERVAL <= templ_img.cols &&
                     abs(y - figure[i][k].second) < TRUSTED_INTERVAL) {
@@ -174,31 +195,31 @@ int main(int argc, char *argv[]) {
 #ifdef DEBUG
         for (size_t j = 0; j < figure_matrix[0].size(); j++) {
             for (size_t k = 0; k < figure_matrix[0].size(); ++k) {
-                cout << figure_matrix[j][k] << ' ';
+                std::cout << figure_matrix[j][k] << ' ';
             }
-            cout << endl;
+            std::cout << std::endl;
         }
-        cout << endl;
+        std::cout << std::endl;
 
         for (size_t i = 0; i < figure_compressed[figure_num - 1].size1(); ++i) {
             for (size_t j = 0; j < figure_compressed[figure_num - 1].size2(); ++j)
                 std::cout << figure_compressed[figure_num - 1](i, j) << ' ';
-            std::cout << endl;
+            std::cout << std::endl;
         }
-        std::cout << endl;
+        std::cout << std::endl;
 #endif
     }
 
-    vector<vector<bst::compressed_matrix<int>>> all_figures(figure_num);
+    vector<vector<compressed_matrix<int>>> all_figures(figure_num);
     for (int i = 0; i < figure_num; ++i) {
         for (int right_shift = 0; right_shift < sqrt(field_size); right_shift++) {
             for (int down_shift = 0; down_shift < sqrt(field_size); down_shift++) {
-                bst::compressed_matrix<bool> all_figure(sqrt(field_size), sqrt(field_size));
+                compressed_matrix<int> all_figure(sqrt(field_size), sqrt(field_size));
                 for (int j = 0; j < sqrt(field_size); ++j) {
                     for (int k = 0; k < sqrt(field_size); ++k) {
                         if (k + right_shift < sqrt(field_size) && j + down_shift < sqrt(field_size)) {
                             if (figure_compressed[i](j, k)) {
-                                all_figure(j + down_shift, k + right_shift) = 1;
+                                all_figure.push_back(j + down_shift, k + right_shift, 1);
                             }
                         }
                     }
@@ -211,23 +232,23 @@ int main(int argc, char *argv[]) {
     }
 
 #ifdef DEBUG
-    for (size_t i = 0; i < all_figures[0].size(); ++i) {
-        for (size_t j = 0; j < all_figures[0][i].size1(); ++j) {
-            for (size_t k = 0; k < all_figures[0][i].size2(); ++k) {
+    for (int i = 0; i < all_figures[0].size(); ++i) {
+        for (int j = 0; j < all_figures[0][i].size1(); ++j) {
+            for (int k = 0; k < all_figures[0][i].size2(); ++k) {
                 std::cout << all_figures[0][i](j, k) << ' ';
             }
-            std::cout << endl;
+            std::cout << std::endl;
         }
-        std::cout << endl;
+        std::cout << std::endl;
     }
-    std::cout << endl;
+    std::cout << std::endl;
 #endif
 
-    bst::compressed_matrix<int> root_zero_matrix(sqrt(field_size), sqrt(field_size));
-    TreeNode<bst::compressed_matrix<int>> *decision_tree = newNode(root_zero_matrix);
-    vector<bst::compressed_matrix<int>> result;
+    compressed_matrix<int> root_zero_matrix(sqrt(field_size), sqrt(field_size));
+    TreeNodeVector<compressed_matrix<int>> *decision_tree = newNode(root_zero_matrix);
+    vector<compressed_matrix<int>> result;
     for (int i = 0; i < figure_num; i++) {
-        std::queue<std::pair<TreeNode<bst::compressed_matrix<int>> *, bst::compressed_matrix<int>>> queue_decision_tree;
+        queue<std::pair<TreeNodeVector<compressed_matrix<int>> *, compressed_matrix<int>>> queue_decision_tree;
         queue_decision_tree.push(std::make_pair(decision_tree, decision_tree->data_));
         while (!queue_decision_tree.empty()) {
             int n = queue_decision_tree.size();
@@ -241,7 +262,7 @@ int main(int argc, char *argv[]) {
 
                 if (p.first->child_.empty()) {
                     for (int j = 0; j < all_figures[i].size(); ++j) {
-                        bst::compressed_matrix<int> temp = p.second + all_figures[i][j];
+                        compressed_matrix<int> temp = p.second + all_figures[i][j];
                         if (temp.nnz() == p.second.nnz() + all_figures[i][j].nnz())
                             p.first->child_.push_back(newNode(temp));
                     }
@@ -253,7 +274,7 @@ int main(int argc, char *argv[]) {
     }
 
 
-    std::queue<std::pair<TreeNode<bst::compressed_matrix<int>> *, bst::compressed_matrix<int>>> queue_decision_tree;
+    queue<std::pair<TreeNodeVector<compressed_matrix<int>> *, compressed_matrix<int>>> queue_decision_tree;
     queue_decision_tree.push(std::make_pair(decision_tree, decision_tree->data_));
     while (!queue_decision_tree.empty()) {
         int n = queue_decision_tree.size();
@@ -264,7 +285,7 @@ int main(int argc, char *argv[]) {
                 result.push_back(p.second);
             queue_decision_tree.pop();
             for (int i = 0; i < p.first->child_.size(); i++) {
-                bst::compressed_matrix<int> temp = p.second + p.first->child_[i]->data_;
+                compressed_matrix<int> temp = p.second + p.first->child_[i]->data_;
                 for (int i = 0; i < temp.size1(); ++i) {
                     for (int j = 0; j < temp.size2(); ++j) {
 #ifdef DEBUG
@@ -272,11 +293,11 @@ int main(int argc, char *argv[]) {
 #endif
                     }
 #ifdef DEBUG
-                    cout << endl;
+                    std::cout << std::endl;
 #endif
                 }
 #ifdef DEBUG
-                cout << endl;
+                std::cout << std::endl;
 #endif
                 queue_decision_tree.push(std::make_pair(p.first->child_[i], temp));
 
@@ -284,6 +305,9 @@ int main(int argc, char *argv[]) {
             n--;
         }
     }
+
+    for (int i = 0; i < figure_number.size() / 2; ++i)
+        swap(figure_number[i], figure_number[figure_number.size() - i - 1]);
 
 
     for (int i = 0; i < result.size(); ++i) {
@@ -298,45 +322,21 @@ int main(int argc, char *argv[]) {
 
             for (int j = 0; j < result[i].size1(); ++j) {
                 for (int k = 0; k < result[i].size2(); ++k) {
-                    RectangleShape rect(Vector2(50.f, 50.f));
-                    rect.setPosition(55 * j, 55 * k);
+                    Texture rect_t;
                     int color = 0, count = result[i](k, j);
                     while (count > 1) {
                         color++;
                         count = count >> 1;
                     }
-                    switch (color) {
-                        case 0:
-                            rect.setFillColor(Color::Black);
-                            break;
-                        case 1:
-                            rect.setFillColor(Color::Blue);
-                            break;
-                        case 2:
-                            rect.setFillColor(Color::Green);
-                            break;
-                        case 3:
-                            rect.setFillColor(Color::Red);
-                            break;
-                        case 4:
-                            rect.setFillColor(Color::Yellow);
-                            break;
-                        case 5:
-                            rect.setFillColor(Color::Magenta);
-                            break;
-                        case 6:
-                            rect.setFillColor(Color::Cyan);
-                            break;
-                        case 7:
-                            rect.setFillColor(Color::Transparent);
-                            break;
-                    }
+                    rect_t.loadFromFile(templ_path + std::to_string(figure_number[color]) + ".jpg");
+                    Sprite rect;
+                    rect.setTexture(rect_t);
+                    rect.setPosition(55 * j, 55 * k);
                     window.draw(rect);
                 }
             }
             window.display();
         }
     }
-
     return 0;
 }

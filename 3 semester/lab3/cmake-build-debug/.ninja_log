@@ -1,0 +1,15 @@
+# ninja log v5
+322	2428	1640356859239450600	source/CMakeFiles/lab2_run.dir/graph/graph.cpp.o	5f4ec0ae1018f185
+1338	1758	1640332090562561100	src/lab2_run	edeee37391848dcc
+12	1332	1640332090128606300	src/CMakeFiles/lab2_run.dir/graph/graph.cpp.o	7a7b0244683fbe7b
+9	1152	1640332089950373400	src/CMakeFiles/lab2_run.dir/main.cpp.o	918a1e1cd1da4fe3
+535	3823	1640356789071630400	source/CMakeFiles/lab2_run.dir/main.cpp.o	d119a73aa81a9eff
+2435	3179	1640356859992893300	source/lab2_run	4d272fe281ffa2b6
+44	8764	1640358801752339600	source/CMakeFiles/lab3_run.dir/main.cpp.o	b2b3eba0792c5350
+52	10601	1640358803742793600	source/CMakeFiles/lab3_run.dir/graph/graph.cpp.o	85cade7dca578b51
+10626	13250	1640358806375276600	source/lab3_run	d0c2aac6c7b056c7
+291	7196	1640358912919252200	source/CMakeFiles/lab3_run.dir/graph/graph.cpp.o	85cade7dca578b51
+7227	8384	1640358914144335700	source/lab3_run	d0c2aac6c7b056c7
+74	8845	1640360205551401600	source/CMakeFiles/lab3_run.dir/main.cpp.o	b2b3eba0792c5350
+78	9876	1640360206608610500	source/CMakeFiles/lab3_run.dir/graph/graph.cpp.o	85cade7dca578b51
+9994	14800	1640360211591254900	source/lab3_run	d0c2aac6c7b056c7

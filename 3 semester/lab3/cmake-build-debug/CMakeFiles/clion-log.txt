@@ -1,0 +1,12 @@
+/opt/clion-2021.3.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/opt/clion-2021.3.1/bin/ninja/linux/ninja -G Ninja "/home/alexesn/Documents/CLionProjects/labs_inf_esis_alexander/3 semester/lab3"
+-- Found SFML 2.5.1 in /usr/lib/x86_64-linux-gnu/cmake/SFML
+-- Failed to find LLVM FileCheck
+-- git version: v0.0.0-dirty normalized to 0.0.0
+-- Version: 1.5.3
+-- Performing Test HAVE_STD_REGEX -- success
+-- Performing Test HAVE_GNU_POSIX_REGEX -- failed to compile
+-- Performing Test HAVE_POSIX_REGEX -- success
+-- Performing Test HAVE_STEADY_CLOCK -- success
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/alexesn/Documents/CLionProjects/labs_inf_esis_alexander/3 semester/lab3/cmake-build-debug
