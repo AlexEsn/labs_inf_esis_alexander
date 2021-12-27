@@ -111,3 +111,12 @@ void ListSequence<T>::Remove(int index) {
     auto it = list_->get_nth(index);
     list_->remove_it(it);
 }
+
+template<typename U>
+std::ostream &operator<<(std::ostream &out, const ListSequence<U> &seq) {
+    for (int i = 0; i < seq.GetLength(); ++i)
+        out << seq.Get(i) << ' ';
+    return out;
+}
+
+

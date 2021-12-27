@@ -4,26 +4,25 @@
 #include "../arr/arraysequence.h"
 
 template<class T>
-class queue {
+class stack {
 
 private:
     Sequence<T> *data_;
 
 public:
-    queue() : data_(new ListSequence<T>) {};
+    stack() : data_(new ListSequence<T>) {};
 
     void push(const T &value) {
         data_->Append(value);
     }
 
-    T front() {
+    T top() {
         return data_->GetFirst();
     }
 
     bool empty() {
         return (data_->GetLength() == 0);
     }
-
 
     void pop() {
         data_->Remove(0);
@@ -33,7 +32,7 @@ public:
         data_->GetLength();
     }
 
-    ~queue() {
+    ~stack() {
         delete (ListSequence<T>*) data_;
     };
 };

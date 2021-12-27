@@ -1,35 +1,19 @@
 #pragma once
 
-#include "../matrix/squareMatrix.h"
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <utility>
-#include <vector>
-using namespace std;
+#include "../matrix/squareMatrix.h"
+#include "../queue/queue.h"
+#include "../stack/stack.h"
 
 #define NUM_OF_ROWS 3
 
 struct Edge {
-    size_t src, dst;
+    size_t src, dst, weight;
 };
 
 class Graph {
-
-public:
-    std::vector<int> *adj_list;
-
-    Graph(std::vector<Edge> const &edges, int N)
-    {
-        adj_list = new std::vector<int>[N];
-
-        for (int i = 0; i < (int) edges.size(); ++i)
-        {
-            int src = edges[i].src;
-            int dst = edges[i].dst;
-            adj_list[src].push_back(dst);
-            adj_list[dst].push_back(src);
-        }
-    }
 
 private:
     SquareMatrix<bool> matrix_;
@@ -39,9 +23,9 @@ private:
 public:
 
     Graph(float width, float height);
-    explicit Graph(const SquareMatrix<bool> &matrix, float width, float height);
 
-    void drawInCircle(sf::RenderWindow &window,int position);
+    explicit Graph(const SquareMatrix<bool> &matrix, float width, float height);
+    void drawInCircle(sf::RenderWindow &window, int position);
     void drawInRectangle(sf::RenderWindow &window, int position);
 
     void Addition(const Graph &graph);
@@ -50,4 +34,7 @@ public:
 
     void BFS(sf::RenderWindow &window, int position);
     void DepthSearch(sf::RenderWindow &window, int position, size_t search);
+    void SearchOstov(sf::RenderWindow &window, int position, int num_vertex);
 };
+
+#include "graph.tpp"
